@@ -1,0 +1,630 @@
+.search-container {
+  display: flex;
+  align-items: center;
+  position: relative;
+  width: 100%;
+  max-width: 90%;
+  height: 2.8rem;
+  border-radius: 2.5rem;
+  box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.1);
+  background-color: var(--color-fondo-buscador, #f0f0f0);
+}
+
+.search-input {
+  flex: 1;
+  height: 100%;
+  padding: 0 5%;
+  border: none;
+  background: transparent;
+  font-size: 1rem;
+  border-radius: 2.5rem;
+  outline: none;
+  color: var(--color-texto-buscador, #000);
+}
+
+.search-button {
+  position: absolute;
+  right: 2%;
+  top: 50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border: none;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  color: #666;
+}
+
+.search-button:hover {
+  color: #333;
+}
+
+.search-button img {
+  content: var(--url-imagen-buscador);
+}
+
+.div-desktop-search {
+  max-width: 600px;
+}
+
+.nav-item {
+  cursor: pointer;
+}
+
+.btn-edit,
+.btn-paleta {
+  color: white;
+  border: none;
+  padding: 0.3rem;
+  border-radius: 50%;
+  cursor: pointer;
+  width: 2.5rem;
+  height: 2.5rem;
+  box-shadow: 0 0.125rem 0.3125rem rgba(0, 0, 0, 0.2);
+}
+
+.navbar-nav {
+  gap: 5%;
+}
+
+.nav-link.active-route {
+  position: relative;
+}
+
+.nav-link.active-route::after {
+  content: "";
+  position: absolute;
+  bottom: -0.125rem;
+  left: 0;
+  width: 100%;
+  height: 0.125rem;
+  background-color: currentColor;
+}
+
+/* Para el botón con clase btn que también puede estar activo */
+.btn.active-route {
+  text-decoration: underline;
+}
+
+@media (max-width: 576px) {
+  .search-container {
+    max-width: 95%;
+  }
+
+  .search-input {
+    font-size: 0.75rem;
+  }
+}
+
+@media (min-width: 768px) and (max-width: 820px) {
+  .div-desktop-search {
+    display: none !important;
+  }
+
+  .d-lg-none.d-flex.justify-content-center {
+    display: flex !important;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #navbarNav {
+    opacity: 0.95;
+    position: fixed;
+    top: 3.75rem;
+    left: 0;
+    width: 100%;
+    background-color: var(--color-fondo-navbar, white);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+  }
+
+  .logoMenu {
+    margin-left: 4%;
+  }
+
+  .navbar-nav {
+    flex-direction: column;
+    padding: 0.625rem 0;
+    width: 90%;
+  }
+
+  .navbar-nav .nav-item {
+    padding: 0.3rem 5%;
+  }
+
+  .navbar-brand {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+  }
+  .mobile-social-icons {
+    display: flex;
+    justify-content: center;
+    margin-top: auto;
+    padding: 2rem 0;
+  }
+
+  .social-icon {
+    font-size: 1.5rem;
+    color: #333;
+    text-decoration: none;
+  }
+
+  .mobile-social-icons,
+  .navbar-brand-mov {
+    display: flex !important;
+  }
+
+  .search-button {
+    position: absolute;
+    right: 2%;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+  }
+
+  /* Remover la línea del último elemento */
+  .navbar-nav .nav-item:last-child {
+    border-bottom: none;
+  }
+
+  .navbar-nav .nav-link {
+    color: #333;
+    font-size: 16px;
+    padding: 0;
+    display: block;
+    width: 100%;
+  }
+}
+
+.desktop-search {
+  min-width: 100px;
+  width: 100%;
+  max-width: 250px;
+}
+
+@media (min-width: 1200px) {
+  .desktop-search {
+    max-width: 400px;
+  }
+}
+
+@media (min-width: 992px) {
+  .d-lg-none.d-flex.justify-content-center {
+    display: none !important;
+  }
+
+  .mobile-logout-container {
+    display: none !important;
+  }
+}
+
+@media (max-width: 768px) {
+  .d-lg-none.d-flex.justify-content-center {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+  }
+
+  #navbarNav {
+    opacity: 0.95;
+    position: absolute;
+    top: 3.75rem;
+    left: 0;
+    width: 100%;
+    background-color: var(--color-fondo-navbar, white);
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    z-index: 100;
+    align-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .logoMenu {
+    margin-left: 4%;
+  }
+
+  .navbar-nav {
+    flex-direction: column;
+    padding: 1.25rem 0;
+  }
+
+  .navbar-nav .nav-item {
+    padding: 0.625rem 5%;
+  }
+
+  .navbar-brand {
+    display: flex !important;
+    flex-direction: column;
+    align-items: center !important;
+    justify-content: center;
+  }
+  .mobile-social-icons {
+    display: flex;
+    justify-content: center;
+    margin-top: auto;
+    padding: 2rem 0;
+  }
+
+  .social-icon {
+    font-size: 1.5rem;
+    color: #333;
+    text-decoration: none;
+  }
+
+  .mobile-social-icons,
+  .navbar-brand-mov {
+    display: flex !important;
+  }
+
+  .search-button {
+    position: absolute;
+    right: 2%;
+    top: 50%;
+    transform: translateY(-50%);
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #666;
+  }
+
+  /* Remover la línea del último elemento */
+  .navbar-nav .nav-item:last-child {
+    border-bottom: none;
+  }
+
+  .navbar-nav .nav-link {
+    color: #333;
+    font-size: 16px;
+    padding: 0;
+    display: block;
+    width: 100%;
+  }
+}
+
+.mobile-social-icons,
+.navbar-brand-mov {
+  display: none !important;
+}
+
+.carrito-container {
+  position: relative;
+  display: inline-block;
+  cursor: pointer;
+}
+
+.carrito-container .img-editor {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  background: white;
+  padding: 5px 10px;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 100;
+  display: none;
+}
+
+.modoEdicion .carrito-container:hover .img-editor {
+  display: block;
+}
+
+.modoEdicion .carrito-container .img-editor label {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+}
+
+.modoEdicion .carrito-container .img-editor i {
+  font-size: 18px;
+  color: #333;
+}
+
+.modoEdicion .carrito-container.edit-mode:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+  border-radius: 4px;
+}
+
+@media (max-width: 991px) {
+  #navbarNav {
+    opacity: 0.95;
+    position: fixed;
+    top: 0;
+    left: -93%;
+    width: 93%;
+    height: 100vh;
+    background-color: var(--color-fondo-navbar, white);
+    z-index: 1000;
+    transition: left 0.3s ease;
+    overflow-y: auto;
+    /* display: flex !important; */
+    padding-top: 60px;
+    /* align-content: flex-start; */
+    /* flex-wrap: wrap; */
+    box-shadow: 2px 0 10px rgba(0, 0, 0, 0.1);
+  }
+
+  #navbarNav.show {
+    left: 0;
+  }
+
+  .logoMenu {
+    margin-left: 5%;
+  }
+
+  .navbar-nav {
+    flex-direction: column;
+    padding: 10px 0;
+    margin-top: 20px;
+    width: 90%;
+  }
+
+  .navbar-nav .nav-item {
+    padding: 10px 20px;
+    border-bottom: 2px solid #e0e0e0;
+    width: 100%;
+  }
+
+  .navbar-nav .nav-link {
+    color: #333;
+    font-size: 16px;
+    padding: 0;
+    display: block;
+    width: 100%;
+  }
+
+  .close-menu-btn {
+    position: absolute;
+    top: 20px;
+    right: 0px;
+    background: black;
+    border: none;
+    font-size: 24px;
+    cursor: pointer;
+    width: 80px;
+    border-radius: 20px 0 0 20px;
+  }
+
+  .cerrar {
+    left: 10px;
+    color: white;
+    display: flex !important;
+    flex-direction: column;
+    align-content: flex-start;
+    flex-wrap: wrap;
+  }
+
+  .mobile-social-icons {
+    display: flex;
+    justify-content: center;
+    margin-top: auto;
+    padding: 2rem 0;
+    width: 100%;
+    position: absolute;
+    bottom: 5%;
+    left: 0;
+  }
+
+  .social-icon {
+    font-size: 1.5rem;
+    color: #333;
+    text-decoration: none;
+  }
+
+  .mobile-social-icons,
+  .navbar-brand-mov {
+    display: flex !important;
+  }
+
+  .div-desktop-search {
+    display: none !important;
+  }
+
+  .search-container {
+    max-width: 85%;
+  }
+
+  .search-button {
+    right: 2%;
+  }
+
+  .navbar {
+    height: 54px !important;
+    min-height: 54px !important;
+    padding-top: 0 !important;
+    padding-bottom: 0 !important;
+  }
+
+  .container-fluid {
+    height: 54px !important;
+    align-items: center !important;
+  }
+
+  .navbar-brand {
+    padding: 0 !important;
+    margin: 0 !important;
+    height: 54px !important;
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+  }
+
+  .navbar-brand img {
+    height: 40px !important;
+  }
+
+  .search-container {
+    height: 36px !important;
+    max-width: 80% !important;
+  }
+
+  .btn-light {
+    padding: 4px 8px !important;
+    font-size: 1rem !important;
+    line-height: 1 !important;
+    height: auto !important;
+  }
+
+  .navbar-overlay {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100vh;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 999;
+    display: none;
+  }
+
+  .navbar-overlay.show {
+    display: block;
+  }
+
+  /* Remover la línea del último elemento */
+  .navbar-nav .nav-item:last-child {
+    border-bottom: none;
+  }
+}
+
+/* Estilos adicionales para el modo edición */
+
+.edit-nav-item {
+  padding: 5px;
+  border-radius: 4px;
+  margin: 2px 0;
+  min-width: 150px;
+  transition: all 0.3s ease;
+}
+
+.edit-nav-item:hover {
+  background-color: rgba(0, 0, 0, 0.05);
+}
+
+/* Edición de colores e inputs */
+.form-control-color {
+  width: 30px;
+  height: 30px;
+  padding: 2px;
+}
+
+.form-control-sm {
+  font-size: 0.875rem;
+  min-height: 30px;
+}
+
+/* Estilo para los contenedores de edición de imágenes */
+.img-editor {
+  position: absolute;
+  width: auto;
+  z-index: 100;
+  background: white;
+  padding: 5px;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  display: none;
+}
+
+.search-button:hover .img-editor,
+.navbar-brand:hover .logo-editor,
+.navbar-brand-mov:hover .logo-editor,
+.carrito-container:hover .img-editor {
+  display: block;
+}
+
+/* Editor de colores del buscador */
+.search-colors-editor {
+  top: -40px;
+  right: 10px;
+  background: white;
+  padding: 5px;
+  border-radius: 4px;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  z-index: 100;
+}
+
+/* Efectos visuales durante edición */
+.edit-mode {
+  border: 1px dashed #ccc;
+}
+
+/* Estilo para resaltar elementos editables */
+.modoEdicion .nav-item,
+.modoEdicion .search-container,
+.modoEdicion .navbar-brand,
+.modoEdicion .navbar-brand-mov {
+  position: relative;
+}
+
+.modoEdicion .nav-item::after,
+.modoEdicion .search-container::after,
+.modoEdicion .navbar-brand::after,
+.modoEdicion .navbar-brand-mov::after,
+.modoEdicion .carrito-container::after {
+  content: "✏️";
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  font-size: 12px;
+  background: rgba(255, 255, 255, 0.8);
+  border-radius: 50%;
+  padding: 2px;
+  display: none;
+}
+
+.modoEdicion .nav-item:hover::after,
+.modoEdicion .search-container:hover::after,
+.modoEdicion .navbar-brand:hover::after,
+.modoEdicion .navbar-brand-mov:hover::after,
+.modoEdicion .carrito-container:hover::after {
+  display: block;
+}
+
+/* Animación para transición al modo edición */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.edit-nav-item,
+.img-editor,
+.search-colors-editor,
+.logo-editor {
+  animation: fadeIn 0.3s;
+}
+
+/* Botón de guardar cambios */
+.btn-success {
+  background-color: #28a745;
+  color: white;
+}
+
+.cart-count {
+  position: absolute;
+  top: -10px;
+  right: -10px;
+  background-color: #ff5722;
+  color: white;
+  border-radius: 50%;
+  width: 20px;
+  height: 20px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 12px;
+  font-weight: bold;
+}

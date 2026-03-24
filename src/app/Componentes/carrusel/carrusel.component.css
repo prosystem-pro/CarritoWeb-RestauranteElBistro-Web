@@ -1,0 +1,635 @@
+/* Variables CSS para facilitar cambios temáticos */
+:root {
+  --carousel-primary-color: #6b3c0a;
+  --carousel-secondary-color: #cb8c52;
+  --carousel-bg-color: #ffffff;
+  --carousel-shadow-color: rgba(0, 0, 0, 0.1);
+  --carousel-text-color: #4b4a49;
+  --carousel-light-text: #666666;
+  --carousel-card-width-desktop: 280px;
+  --carousel-card-width-mobile: 220px;
+  --carousel-transition: all 0.3s ease;
+}
+
+/* Carousel container con estilos mejorados */
+.carousel-container {
+  position: relative;
+  padding: 0 15px;
+  overflow: hidden;
+  margin-bottom: 1rem;
+  box-sizing: border-box;
+  /* Fix para iOS */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+/* Productos carousel con mejoras de rendimiento y compatibilidad iOS */
+.products-carousel {
+  display: flex;
+  flex-wrap: nowrap;
+  overflow-x: auto;
+  gap: 20px;
+  padding: 25px 10px 15px;
+  margin-bottom: 10px;
+
+  /* Scrollbar hiding - compatible con todos los navegadores */
+  -ms-overflow-style: none; /* IE and Edge */
+  scrollbar-width: none; /* Firefox */
+
+  /* Scroll behavior mejorado para iOS */
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+
+  /* Fixes específicos para iOS */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  will-change: scroll-position;
+
+  /* Prevenir zoom en iOS */
+  touch-action: pan-x;
+
+  /* Momentum scrolling en iOS */
+  -webkit-overflow-scrolling: touch;
+
+  /* Evitar el bounce en iOS cuando se hace scroll */
+  overscroll-behavior-x: contain;
+}
+
+/* Ocultar scrollbar para Chrome, Safari y Opera */
+.products-carousel::-webkit-scrollbar {
+  display: none;
+  width: 0;
+  height: 0;
+  background: transparent;
+}
+
+/* Estilos específicos para vista desktop */
+.desktop-view {
+  padding: 25px 15px 15px;
+  justify-content: flex-start;
+  transition: var(--carousel-transition);
+}
+
+/* Vista móvil con scroll de snap mejorado para iOS */
+.mobile-view {
+  justify-content: flex-start;
+  scroll-snap-type: x mandatory;
+  padding: 15px 5px;
+
+  /* Mejoras específicas para iOS */
+  -webkit-scroll-snap-type: x mandatory;
+  scroll-snap-type: x mandatory;
+
+  /* Scroll más suave en iOS */
+  scroll-behavior: smooth;
+  -webkit-overflow-scrolling: touch;
+}
+
+/* Tarjeta de producto mejorada con efectos hover y estructura */
+.product-card {
+  flex: 0 0 auto;
+  width: var(--carousel-card-width-desktop);
+  height: auto;
+  transition: var(--carousel-transition);
+  cursor: pointer;
+  position: relative;
+  border-radius: 12px;
+  overflow: hidden;
+
+  /* Prevenir problemas de alineación */
+  display: flex;
+  flex-direction: column;
+
+  /* Mejoras para iOS */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+  -webkit-backface-visibility: hidden;
+  backface-visibility: hidden;
+}
+
+/* Mejoras específicas para móvil iOS */
+@media screen and (-webkit-min-device-pixel-ratio: 2) {
+  .mobile-view .product-card {
+    scroll-snap-align: center;
+    width: var(--carousel-card-width-mobile);
+    /* Optimización para retina displays */
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+.add-card {
+  border: 2px dashed #ddd;
+  border-radius: 12px;
+  background-color: rgba(240, 240, 240, 0.5);
+}
+
+.add-image-container {
+  height: 220px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  transition: var(--carousel-transition);
+}
+
+.add-image-container:hover {
+  background-color: rgba(230, 230, 230, 0.8);
+}
+
+.product-card-inner {
+  position: relative;
+  width: 100%;
+  height: 100%;
+  box-shadow: 0 6px 15px var(--carousel-shadow-color);
+  border-radius: 12px;
+  overflow: hidden;
+  background-color: var(--carousel-bg-color);
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+  display: flex;
+  flex-direction: column;
+
+  /* Mejoras para iOS */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+}
+
+/* Efecto hover mejorado - deshabilitado en touch devices */
+@media (hover: hover) and (pointer: fine) {
+  .product-card:hover .product-card-inner {
+    transform: translateY(-10px);
+    box-shadow: 0 12px 20px rgba(107, 60, 10, 0.15);
+  }
+}
+
+/* Alineación de elementos en vista móvil */
+.mobile-view .product-card {
+  scroll-snap-align: center;
+  width: var(--carousel-card-width-mobile);
+}
+
+/* Estilos de imagen mejorados */
+.product-image {
+  aspect-ratio: 1/1;
+  width: 100%;
+  height: 220px;
+  object-fit: cover;
+  border-top-left-radius: 12px;
+  border-top-right-radius: 12px;
+  transition: var(--carousel-transition);
+  display: block;
+
+  /* Optimización para iOS */
+  -webkit-transform: translateZ(0);
+  transform: translateZ(0);
+
+  /* Prevenir selección en iOS */
+  -webkit-user-select: none;
+  user-select: none;
+  -webkit-touch-callout: none;
+}
+
+/* Sección de información del producto */
+.product-info {
+  padding: 12px 15px;
+  text-align: center;
+  flex-grow: 1;
+  display: flex;
+  flex-direction: column;
+}
+
+.product-title {
+  font-weight: 600;
+  margin-bottom: 5px;
+  font-size: 1rem;
+  color: var(--carousel-primary-color);
+  word-wrap: break-word;
+
+  /* Mejora para iOS */
+  -webkit-font-smoothing: antialiased;
+}
+
+.product-description {
+  font-size: 0.85rem;
+  color: var(--carousel-light-text);
+  margin-bottom: 10px;
+  line-height: 1.4;
+  flex-grow: 1;
+  word-wrap: break-word;
+
+  /* Mejora para iOS */
+  -webkit-font-smoothing: antialiased;
+}
+
+/* Controles de edición */
+.edit-controls {
+  position: absolute;
+  top: 10px;
+  right: 10px;
+  display: flex;
+  gap: 5px;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+  z-index: 5;
+}
+
+/* Solo mostrar en hover en dispositivos que lo soporten */
+@media (hover: hover) and (pointer: fine) {
+  .product-card:hover .edit-controls {
+    opacity: 1;
+  }
+}
+
+.edit-btn,
+.delete-btn {
+  width: 30px;
+  height: 30px;
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* Overlay para edición de imagen */
+.image-edit-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.3);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0;
+  transition: opacity 0.2s ease;
+}
+
+.image-edit-overlay i {
+  color: white;
+  font-size: 2rem;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .product-card-edit:hover .image-edit-overlay {
+    opacity: 1;
+  }
+}
+
+/* Botones de carousel mejorados */
+.carousel-arrow {
+  position: absolute;
+  top: 40%;
+  transform: translateY(-50%);
+  width: 40px;
+  height: 40px;
+  background-color: rgba(255, 255, 255, 0.9);
+  border-radius: 50%;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  cursor: pointer;
+  border: none;
+  outline: none;
+  box-shadow: 0 4px 12px var(--carousel-shadow-color);
+  z-index: 10;
+  transition: var(--carousel-transition);
+  color: var(--carousel-primary-color);
+
+  /* Mejoras para iOS */
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  user-select: none;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .carousel-arrow:hover {
+    background-color: var(--carousel-primary-color);
+    color: white;
+    box-shadow: 0 6px 15px rgba(107, 60, 10, 0.2);
+  }
+}
+
+.carousel-arrow:active {
+  transform: translateY(-50%) scale(0.95);
+}
+
+.carousel-arrow:focus-visible {
+  outline: 2px solid var(--carousel-secondary-color);
+  outline-offset: 2px;
+}
+
+.arrow-left {
+  left: 5px;
+}
+
+.arrow-right {
+  right: 5px;
+}
+
+/* Estilos mejorados para el pie de carousel */
+.carousel-footer {
+  position: unset !important;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 10px;
+}
+
+.carousel-title {
+  text-align: center;
+  margin-bottom: 15px;
+}
+
+.carousel-title h3 {
+  margin-bottom: 10px;
+  color: var(--carousel-primary-color);
+
+  /* Mejora para iOS */
+  -webkit-font-smoothing: antialiased;
+}
+
+.carousel-title hr {
+  border-color: var(--carousel-secondary-color);
+  opacity: 0.5;
+  margin-top: 0;
+}
+
+/* Indicadores de paginación mejorados */
+.carousel-indicators {
+  position: unset !important;
+  display: flex;
+  justify-content: center;
+  gap: 8px;
+  margin: 10px 0;
+}
+
+.indicator {
+  width: 10px;
+  height: 10px;
+  border-radius: 50%;
+  background-color: #b8b8b8;
+  cursor: pointer;
+  transition: all 0.3s ease;
+  display: block !important;
+  visibility: visible !important;
+
+  /* Mejoras para iOS */
+  -webkit-tap-highlight-color: transparent;
+  -webkit-touch-callout: none;
+}
+
+.indicator.active {
+  background-color: #4b4a49;
+  transform: scale(1.2);
+}
+
+.indicator:focus-visible {
+  outline: 2px solid var(--carousel-secondary-color);
+  outline-offset: 2px;
+}
+
+.btn-edicion {
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  z-index: 50;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+  transition: var(--carousel-transition);
+
+  /* Mejoras para iOS */
+  -webkit-tap-highlight-color: transparent;
+}
+
+@media (hover: hover) and (pointer: fine) {
+  .btn-edicion:hover {
+    transform: scale(1.05);
+  }
+}
+
+.btn-edicion:active {
+  transform: scale(0.95);
+}
+
+/* Estilos responsivos mejorados */
+@media (max-width: 768px) {
+  .carousel-arrow {
+    width: 35px;
+    height: 35px;
+  }
+
+  .product-card {
+    width: var(--carousel-card-width-mobile);
+    /* Snap mejorado para iOS */
+    scroll-snap-align: center;
+  }
+
+  .product-image {
+    aspect-ratio: 1/1;
+    height: 165px;
+  }
+
+  .carousel-title h3 {
+    font-size: 1.75rem;
+  }
+
+  .carousel-title hr {
+    width: 150px !important;
+  }
+
+  .edit-controls {
+    opacity: 1; /* Siempre visible en móvil */
+  }
+
+  /* Optimizaciones específicas para iOS */
+  .products-carousel {
+    scroll-snap-type: x mandatory;
+    -webkit-scroll-snap-type: x mandatory;
+  }
+}
+
+/* Media query específica para iOS */
+@supports (-webkit-overflow-scrolling: touch) {
+  .products-carousel {
+    -webkit-overflow-scrolling: touch;
+    scroll-behavior: smooth;
+  }
+
+  .mobile-view .product-card {
+    scroll-snap-align: center;
+  }
+}
+
+/* Media query para dispositivos iOS específicamente */
+@media screen and (-webkit-min-device-pixel-ratio: 2) and (orientation: portrait) {
+  .products-carousel {
+    padding: 15px 5px;
+  }
+
+  .product-card {
+    scroll-snap-align: center;
+    -webkit-transform: translate3d(0, 0, 0);
+    transform: translate3d(0, 0, 0);
+  }
+}
+
+@media (min-width: 992px) {
+  .carousel-arrow {
+    width: 45px;
+    height: 45px;
+  }
+
+  .arrow-left {
+    left: 10px;
+  }
+
+  .arrow-right {
+    right: 10px;
+  }
+
+  .product-card {
+    width: 300px;
+  }
+
+  .product-image {
+    height: 240px;
+  }
+}
+
+/* Estilos para foco por teclado - accesibilidad */
+button:focus-visible,
+.indicator:focus-visible,
+.add-image-container:focus-visible,
+[role="button"]:focus-visible {
+  outline: 2px solid var(--carousel-secondary-color);
+  outline-offset: 2px;
+}
+
+/* Mejoras de animación */
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+  }
+  to {
+    opacity: 1;
+  }
+}
+
+.product-card {
+  animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Estilos para spinner de carga */
+.spinner-border {
+  width: 2rem;
+  height: 2rem;
+}
+
+/* Fix adicional para Safari iOS - prevenir zoom automático */
+input[type="file"] {
+  font-size: 16px;
+}
+
+/* Prevenir el bounce scroll en iOS */
+body {
+  overscroll-behavior: contain;
+}
+
+/* Optimización adicional para retina displays */
+@media only screen and (-webkit-min-device-pixel-ratio: 2) {
+  .product-card-inner,
+  .product-image,
+  .carousel-arrow {
+    -webkit-transform: translateZ(0);
+    transform: translateZ(0);
+  }
+}
+
+/* Fix específico para iOS */
+@supports (-webkit-overflow-scrolling: touch) {
+  .product-image {
+    width: 100% !important;
+    height: 165px !important;
+    object-fit: cover !important;
+    aspect-ratio: 1/1 !important;
+  }
+
+  .product-card {
+    width: var(--carousel-card-width-mobile) !important;
+    max-width: 220px !important;
+  }
+
+  .add-image-container {
+    height: 165px !important;
+  }
+}
+
+/* Media query específica para dispositivos iOS */
+@media screen and (-webkit-min-device-pixel-ratio: 2) {
+  .mobile-view .product-image {
+    height: 165px !important;
+    width: 100% !important;
+    aspect-ratio: 1/1 !important;
+    object-fit: cover !important;
+  }
+
+  .mobile-view .product-card {
+    width: 220px !important;
+    max-width: 220px !important;
+    min-width: 220px !important;
+  }
+
+  .mobile-view .add-image-container {
+    height: 165px !important;
+  }
+}
+
+/* Fix adicional para Safari iOS */
+@media screen and (-webkit-min-device-pixel-ratio: 1) and (max-width: 768px) {
+  .product-image {
+    height: 165px !important;
+    max-height: 165px !important;
+    aspect-ratio: 1/1 !important;
+  }
+
+  .product-card {
+    width: 220px !important;
+    flex: 0 0 220px !important;
+  }
+}
+
+/* Mejorar el scroll horizontal en iOS - AGREGAR al final del CSS */
+@supports (-webkit-overflow-scrolling: touch) {
+  .products-carousel {
+    -webkit-overflow-scrolling: touch !important;
+    overflow-x: scroll !important;
+    scroll-behavior: smooth !important;
+
+    /* Permitir momentum scrolling nativo de iOS */
+    -webkit-momentum-scrolling: touch;
+
+    /* Asegurar que el scroll sea horizontal */
+    overflow-y: hidden !important;
+  }
+
+  .mobile-view {
+    /* Mejorar el snap scrolling en iOS */
+    scroll-snap-type: x mandatory !important;
+    -webkit-scroll-snap-type: x mandatory !important;
+  }
+
+  .mobile-view .product-card {
+    scroll-snap-align: center !important;
+    scroll-snap-stop: always !important;
+  }
+}
+
+/* Fix específico para Safari en iOS */
+@media screen and (-webkit-min-device-pixel-ratio: 1) {
+  .products-carousel {
+    -webkit-overflow-scrolling: touch;
+    touch-action: pan-x;
+  }
+}

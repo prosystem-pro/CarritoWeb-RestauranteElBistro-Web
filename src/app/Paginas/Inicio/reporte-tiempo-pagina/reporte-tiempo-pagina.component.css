@@ -1,0 +1,76 @@
+@media (min-width: 1105px) {
+    .Titulo {
+        top: -2.5rem;
+
+    }
+
+    .Selector {
+        max-width: 30%;
+    }
+
+    .ContornoHorario {
+        height: 490px;
+    }
+
+}
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 1204px) {
+    .Titulo {
+        font-size: 1.1rem !important;
+        padding: 10px 30px !important;
+        top: -2.2rem;
+    }
+
+    .ContornoHorario {
+        height: 690px;
+    }
+}
+
+/* Celular tamaños normales */
+@media (min-width: 500px) and (max-width: 767px) {
+    .Titulo {
+        font-size: 1.1rem !important;
+        padding: 8px 20px !important;
+        top: -2.2rem;
+    }
+
+    .DiseñoHorario {
+        width: 200px;
+        height: 200px;
+
+
+    }
+
+}
+
+/* Celular pequeños */
+@media (min-width: 321px) and (max-width: 490px) {
+    .Titulo {
+        font-size: 1.0rem !important;
+        padding: 8px 20px !important;
+        top: -2.2rem;
+    }
+
+    .DiseñoHorario {
+        width: 200px;
+        height: 200px;
+
+    }
+
+}
+
+/* Celular muy pequeños */
+@media (max-width: 320px) {
+    .Titulo {
+        font-size: 0.6rem !important;
+        padding: 8px 20px !important;
+        top: -1.6rem;
+    }
+
+    .DiseñoHorario {
+        width: 200px;
+        height: 200px;
+
+    }
+}

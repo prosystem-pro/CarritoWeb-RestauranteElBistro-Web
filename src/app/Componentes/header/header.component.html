@@ -1,0 +1,294 @@
+<header class="navbar navbar-expand-lg border-bottom border-1"
+    [ngStyle]="{'background-color': Datos?.ColorFondoNavbar || '#FFFFFF'}">
+    <div class="container-fluid d-flex justify-content-between align-items-center">
+        <a class="navbar-brand d-lg-block d-flex align-items-center position-relative" href="/">
+            <img [src]="Datos?.UrlLogo" alt="Logo" height="55">
+            <!-- Campo de edición para logo que aparece solo en modo edición -->
+            <div *ngIf="modoEdicion && Permiso.TienePermiso('Navbar', 'SubirImagen')" class="position-absolute"
+                style="right: -35px; top: 50%; transform: translateY(-50%);">
+                <input type="file" class="d-none" id="fileInput" (change)="actualizarLogo($event)" accept="image/*">
+                <label for="fileInput"
+                    class="btn btn-outline-secondary btn-sm rounded-circle d-flex align-items-center justify-content-center"
+                    style="width: 35px; height: 35px; cursor: pointer;">
+                    <i class="bi bi-pencil"></i>
+                </label>
+            </div>
+        </a>
+
+        <!-- Barra de búsqueda en vista móvil -->
+        <div class="d-lg-none d-flex justify-content-center flex-grow-1">
+            <div class="search-container">
+                <!-- Versión normal del buscador -->
+                <input *ngIf="!modoEdicion" type="text" class="search-input"
+                    [placeholder]="Datos?.TextoBuscador || 'Buscar...'"
+                    [ngStyle]="{'color': Datos?.ColorTextoBuscador, 'background-color': Datos?.ColorFondoBuscador}"
+                    [(ngModel)]="textoBusqueda" (keyup.enter)="buscar()">
+
+                <!-- Versión editable del placeholder del buscador -->
+                <input *ngIf="modoEdicion" type="text" class="search-input edit-mode" [(ngModel)]="Datos.TextoBuscador"
+                    placeholder="Texto del buscador"
+                    [ngStyle]="{'color': Datos?.ColorTextoBuscador, 'background-color': Datos?.ColorFondoBuscador}">
+
+                <button class="search-button" type="button" (click)="busquedaActiva ? cancelarBusqueda() : buscar()">
+                    <img *ngIf="!busquedaActiva" [src]="Datos?.UrlImagenBuscador" alt="Buscar" width="20">
+                    <span *ngIf="busquedaActiva" class="cancel-icon">✕</span>
+                    <div *ngIf="modoEdicion && Permiso.TienePermiso('Navbar', 'SubirImagen')" class="mt-1 img-editor">
+                        <label for="imagenBuscador" style="margin-bottom: 0; cursor: pointer;">
+                            <i class="bi bi-image"></i>
+                        </label>
+                        <input id="imagenBuscador" type="file" (change)="actualizarImagenBuscador($event)"
+                            accept="image/*" style="display: none;">
+                    </div>
+                </button>
+            </div>
+        </div>
+
+        <!-- Botón de menú en vista móvil -->
+        <button class="btn btn-light d-lg-none" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav"
+            aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+            ☰
+        </button>
+
+        <!-- Menú en vista de escritorio -->
+        <div #navbarCollapse class="collapse navbar-collapse" id="navbarNav">
+            <a class="navbar-brand-mov" href="/">
+                <img class="logoMenu" [src]="Datos?.UrlLogo" alt="Logo" height="80">
+                <!-- Editor de logo en móvil -->
+                <div *ngIf="modoEdicion && Permiso.TienePermiso('Navbar', 'SubirImagen')" class="mt-2 logo-editor">
+                    <input type="file" class="form-control form-control-sm" (change)="actualizarLogo($event)"
+                        accept="image/*">
+                </div>
+            </a>
+
+            <!-- Botón para cerrar el menú en móvil -->
+            <button class="close-menu-btn d-lg-none" type="button" data-bs-toggle="collapse"
+                data-bs-target="#navbarNav">
+                <span class="cerrar"><i class="bi bi-x-circle"></i></span>
+            </button>
+
+            <ul class="navbar-nav mx-auto">
+                <li class="nav-item">
+                    <!-- Versión normal -->
+                    <a *ngIf="!modoEdicion" (click)="navegar('/nosotros')" class="nav-link"
+                        [ngClass]="!esMovil && estaRutaActiva('/nosotros') ? 'active-route' : ''"
+                        [ngStyle]="{'color': Datos?.ColorTextoInicio}">
+                        {{ Datos?.TextoInicio || '' }}
+                    </a>
+
+                    <!-- Versión editable -->
+                    <div *ngIf="modoEdicion" class="d-flex align-items-center edit-nav-item">
+                        <div class="d-flex ms-2">
+                            <div class="d-flex flex-column">
+                                <small>Texto</small>
+                                <input [(ngModel)]="Datos.ColorTextoInicio" type="color"
+                                    class="form-control form-control-color ms-2" title="Elegir color de texto"
+                                    (input)="sincronizarColores()">
+                            </div>
+                        </div>
+                        <input [(ngModel)]="Datos.TextoInicio" class="form-control form-control-sm"
+                            placeholder="Nosotros">
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <!-- Versión normal -->
+                    <a *ngIf="!modoEdicion" class="nav-link" (click)="navegar('/clasificacion')"
+                        [ngClass]="!esMovil && estaRutaActiva('/clasificacion') ? 'active-route' : ''"
+                        [ngStyle]="{'color': Datos?.ColorTextoMenu}">
+                        {{ Datos?.TextoMenu || '' }}
+                    </a>
+
+                    <!-- Versión editable -->
+                    <div *ngIf="modoEdicion" class="d-flex align-items-center edit-nav-item">
+                        <input [(ngModel)]="Datos.TextoMenu" class="form-control form-control-sm mt-2"
+                            placeholder="Menú">
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <!-- Versión normal -->
+                    <a *ngIf="!modoEdicion" class="nav-link" (click)="navegar('/contacto')"
+                        [ngClass]="!esMovil && estaRutaActiva('/contacto') ? 'active-route' : ''"
+                        [ngStyle]="{'color': Datos?.ColorTextoContacto}">
+                        {{ Datos?.TextoContacto || '' }}
+                    </a>
+
+                    <!-- Versión editable -->
+                    <div *ngIf="modoEdicion" class="d-flex align-items-center edit-nav-item">
+                        <input [(ngModel)]="Datos.TextoContacto" class="form-control form-control-sm mt-2"
+                            placeholder="Contacto">
+                    </div>
+                </li>
+
+                <li *ngIf="Permiso.TienePermiso('ReporteProducto', 'Resumen')" class="nav-item">
+                    <!-- Versión normal -->
+                    <a *ngIf="!modoEdicion" class="nav-link" (click)="navegar('/reporte-producto')"
+                        [ngClass]="!esMovil && estaRutaActiva('/reporte-producto') ? 'active-route' : ''"
+                        [ngStyle]="{'color': Datos?.ColorTextextoReporte}">
+                        {{ Datos?.TextoReporte || '' }}
+                    </a>
+
+                    <!-- Versión editable -->
+                    <div *ngIf="modoEdicion" class="d-flex align-items-center edit-nav-item">
+                        <input [(ngModel)]="Datos.TextoReporte" class="form-control form-control-sm mt-2"
+                            placeholder="Reportes">
+                    </div>
+                </li>
+                <li *ngIf="Permiso.TienePermiso('Pago', 'Listado')" class="nav-item">
+                    <a class="nav-link" (click)="navegar('/pago')"
+                        [ngClass]="!esMovil && estaRutaActiva('/pago') ? 'active-route' : ''"
+                        [ngStyle]="{'color': Datos?.ColorTextoMenu || '#000000'}">
+                        Pago
+                    </a>
+                </li>
+                <li class="nav-item">
+                    <!-- Versión normal -->
+                    <a *ngIf="!modoEdicion" [class.btn]="!esMovil" [class.rounded-pill]="!esMovil"
+                        [class.nav-link]="esMovil" (click)="navegar('/otro')"
+                        [ngClass]="!esMovil && estaRutaActiva('/otro') ? 'active-route' : ''"
+                        [ngStyle]="!esMovil ? {'color': Datos?.ColortextoOtro, 'background-color': Datos?.ColorFondoOtro} : null">
+                        {{ Datos?.TextoOtro || '' }}
+                    </a>
+
+                    <!-- Versión editable -->
+                    <div *ngIf="modoEdicion" class="d-flex align-items-center edit-nav-item">
+                        <input [(ngModel)]="Datos.TextoOtro" class="form-control form-control-sm" placeholder="Recetas">
+                        <div class="d-flex ms-2">
+                            <div class="d-flex flex-column">
+                                <small>Texto</small>
+                                <input [(ngModel)]="Datos.ColortextoOtro" type="color"
+                                    class="form-control form-control-color" title="Color del texto">
+                            </div>
+                            <div class="d-flex flex-column ms-1">
+                                <small>Fondo</small>
+                                <input [(ngModel)]="Datos.ColorFondoOtro" type="color"
+                                    class="form-control form-control-color" title="Color del fondo">
+                            </div>
+                        </div>
+                    </div>
+                </li>
+
+                <li class="nav-item">
+                    <!-- Botón para cerrar sesión -->
+                    <a *ngIf="Permiso.TienePermiso('', '')" class="nav-link mobile-logout-container"
+                        title="Cerrar sesión" (click)="cerrarSesion()"
+                        [ngStyle]="{'color': Datos?.ColorTextextoReporte}">
+                        Cerrar sesión <i class="bi bi-box-arrow-right"></i>
+                    </a>
+                </li>
+            </ul>
+
+            <div class="mobile-social-icons mx-auto gap-1">
+                <a *ngFor="let red of RedeSocial" [href]="red.Link" target="_blank" rel="noopener noreferrer"
+                    class="social-icon position-relative d-inline-block">
+                    <img [src]="red.Imagenes[0]?.UrlImagen || ''" [alt]="red.NombreRedSocial" width="30" height="30"
+                        (click)="ReportarRedSocial(red.CodigoRedSocial)" />
+                    <!-- Botón cámara -->
+                    <label *ngIf="Permiso.TienePermiso('RedSocialImagen', 'SubirImagen')"
+                        class="position-absolute bottom-0 end-0 bg-white rounded-circle d-flex align-items-center justify-content-center"
+                        style="width: 18px; height: 18px; cursor: pointer; box-shadow: 0px 2px 5px rgba(0,0,0,0.3);">
+                        <i class="bi bi-camera-fill text-black fs-6"></i>
+                        <input type="file" accept="image/*"
+                            (change)="actualizarImagenRedSocial($event, red.CodigoRedSocial)" hidden>
+                    </label>
+                </a>
+            </div>
+        </div>
+
+        <!-- Barra de búsqueda en vista de escritorio -->
+        <div class="d-none d-md-flex align-items-center justify-content-end flex-grow-1 div-desktop-search gap-2">
+            <div class="search-container desktop-search">
+                <!-- Editor de colores para el buscador en modo edición -->
+                <div *ngIf="modoEdicion" class="d-flex search-colors-editor">
+                    <div class="d-flex flex-column me-1">
+                        <small>Texto</small>
+                        <input [(ngModel)]="Datos.ColorTextoBuscador" type="color"
+                            class="form-control form-control-color" (change)="actualizarEstilosBuscador()">
+                    </div>
+                    <div class="d-flex flex-column">
+                        <small>Fondo</small>
+                        <input [(ngModel)]="Datos.ColorFondoBuscador" type="color"
+                            class="form-control form-control-color" (change)="actualizarEstilosBuscador()">
+                    </div>
+                </div>
+                <!-- Versión normal del buscador desktop -->
+                <input *ngIf="!modoEdicion" type="text" class="search-input"
+                    [placeholder]="Datos?.TextoBuscador || 'Buscar...'"
+                    [ngStyle]="{'color': Datos?.ColorTextoBuscador, 'background-color': Datos?.ColorFondoBuscador}"
+                    [(ngModel)]="textoBusqueda" (keyup.enter)="buscar()">
+
+                <!-- Versión editable del buscador desktop -->
+                <input *ngIf="modoEdicion" type="text" class="search-input edit-mode" [(ngModel)]="Datos.TextoBuscador"
+                    placeholder="Texto del buscador"
+                    [ngStyle]="{'color': Datos?.ColorTextoBuscador, 'background-color': Datos?.ColorFondoBuscador}">
+
+                <button class="search-button" type="button" (click)="busquedaActiva ? cancelarBusqueda() : buscar()">
+                    <img *ngIf="!busquedaActiva" [src]="Datos?.UrlImagenBuscador" alt="Buscar" width="20">
+                    <span *ngIf="busquedaActiva" class="cancel-icon">✕</span>
+                    <div *ngIf="modoEdicion" class="mt-1 img-editor">
+                        <label for="imagenBuscador" style="margin-bottom: 0; cursor: pointer;">
+                            <i class="bi bi-image"></i>
+                        </label>
+                        <input id="imagenBuscador" type="file" (change)="actualizarImagenBuscador($event)"
+                            accept="image/*" style="display: none;">
+                    </div>
+                </button>
+            </div>
+            <!-- Versión normal del carrito -->
+            <div *ngIf="!modoEdicion && (!Permiso.TienePermiso() || Permiso.TienePermiso('CarritoPortada', 'VerUnidad'))"
+                class="carrito-container" (click)="alternarCarrito()">
+                <span class="cart-count">{{ totalItemsCarrito || 0 }}</span>
+                <img [src]="Datos?.UrlImagenCarrito" alt="Carrito" width="30">
+            </div>
+
+            <!-- Versión editable del carrito -->
+            <div *ngIf="modoEdicion" class="carrito-container edit-mode">
+                <img [src]="Datos?.UrlImagenCarrito" alt="Carrito" height="30">
+
+                <!-- Editor de imagen del carrito en modo edición -->
+                <div *ngIf="modoEdicion" class="mt-1 img-editor">
+                    <label for="imagenCarrito" style="margin-bottom: 0; cursor: pointer;">
+                        <i class="bi bi-image"></i>
+                    </label>
+                    <input id="imagenCarrito" type="file" (change)="actualizarImagenCarrito($event)" accept="image/*"
+                        style="display: none;">
+                </div>
+            </div>
+
+            <!-- Botones de edición -->
+            <button *ngIf="modoEdicion" class="btn btn-light btn-paleta me-2" (click)="openColorPicker()"
+                title="Editar color del navbar">
+                <i class="bi bi-palette text-dark"></i>
+            </button>
+
+            <button *ngIf="Permiso.TienePermiso('Navbar', 'Editar')" class="btn btn-sm btn-light me-2 btn-edit"
+                (click)="toggleModoEdicion()" title="Modo edición">
+                <i class="bi" [ngClass]="{
+                    'bi bi-x-lg': modoEdicion, 
+                    'bi-pencil-square': !modoEdicion,
+                    'text-danger': modoEdicion
+                }" [style.color]="modoEdicion ? '#ffffff' : '#000000'"></i>
+            </button>
+
+            <!-- Botón para cerrar sesión -->
+            <button *ngIf="Permiso.TienePermiso('', '')" class="btn btn-sm me-2" title="Cerrar sesión"
+                (click)="cerrarSesion()">
+                <i class="bi bi-box-arrow-right"></i>
+            </button>
+
+
+            <!-- Botón para guardar cambios en modo edición -->
+            <button *ngIf="modoEdicion" class="btn btn-sm btn-success me-2" (click)="guardarCambios()"
+                title="Guardar cambios">
+                <i class="bi bi-save"></i>
+            </button>
+
+            <!-- Input de color oculto -->
+            <input type="color" #colorPicker id="colorPicker" style="display: none;" (input)="changeColor($event)">
+
+            <app-carrito *ngIf="mostrarCarrito" (cerrarCarrito)="alternarCarrito()"
+                [colorNavbarEIcono]="colorNavbarEIcono" [colorTextoNavbar]="colorTextoNavbar"></app-carrito>
+        </div>
+    </div>
+</header>
+<app-spinner-global [visible]="isLoading"></app-spinner-global>

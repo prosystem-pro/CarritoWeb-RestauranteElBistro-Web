@@ -1,0 +1,321 @@
+.inactivo {
+  pointer-events: none;
+  opacity: 0.6;
+}
+
+.toggle-red-social {
+  -webkit-appearance: none;
+  appearance: none;
+  width: 40px;
+  height: 20px;
+  background-color: #222;
+  border-radius: 20px;
+  position: relative;
+  cursor: pointer;
+  outline: none;
+  transition: background-color 0.3s ease;
+}
+
+.toggle-red-social:checked {
+  background-color: #2ecc71;
+}
+
+.toggle-red-social::before {
+  content: "";
+  position: absolute;
+  top: 2px;
+  left: 2px;
+  width: 16px;
+  height: 16px;
+  background: white;
+  border-radius: 50%;
+  transition: transform 0.1s ease;
+}
+
+.toggle-red-social:checked::before {
+  transform: translateX(20px);
+}
+
+
+.toggle-red-social.activo {
+  accent-color: #2ecc71;
+  /* Verde limón cuando está activo */
+}
+
+@media (min-width: 1105px) {
+  .InputNombreContactanosPortada {
+    width: 100%;
+    max-width: 300px;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+  }
+
+  .EstiloColor {
+    position: relative;
+    top: -5px;
+  }
+
+  .BotonesExtras {
+    margin-top: -10px;
+  }
+
+  .ContornoFondoTitulo {
+    width: 67%;
+    height: 100%;
+  }
+
+  .ContornoFondoRedesSociales {
+    width: 39%;
+    height: 100%;
+  }
+
+  .ContornoFondoRedesSocialesNuevo {
+    width: 45%;
+    height: 100%;
+  }
+
+  .ContenidoRedesSociales {
+    margin-left: 34%;
+  }
+
+  .TamañoContenidoRedesSociales {
+    width: 100%;
+    height: 100%
+  }
+
+  .FondoPantalla {
+    height: 100%;
+    position: relative;
+  }
+
+  .MedidaImagenHorario {
+    height: 720px;
+    width: 100%;
+    background-size: 100% 100%;
+
+  }
+}
+
+/* Tablet */
+@media (min-width: 768px) and (max-width: 1204px) {
+  .InputNombreContactanosPortada {
+    width: 30%;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+  }
+
+  .EstiloColor {
+    position: relative;
+    top: -5px;
+  }
+
+  .ContornoFondoTitulo {
+    width: 80%;
+    height: 100%;
+  }
+
+  .ContornoFondoRedesSociales {
+    width: 49%;
+    height: 100%;
+  }
+
+  .ContornoFondoRedesSocialesNuevo {
+    width: 55%;
+    height: 100%;
+  }
+
+  .ContenidoRedesSociales {
+    margin-left: 27%;
+  }
+
+  .TamañoContenidoRedesSociales {
+    width: 100%;
+    height: 100%
+  }
+
+  .FondoPantalla {
+    height: 65%;
+    position: relative;
+  }
+
+  .MedidaImagenHorario {
+    height: 500px;
+    width: 100%;
+    background-size: 100% 100%;
+
+  }
+}
+
+/* Celular tamaños normales */
+@media (min-width: 500px) and (max-width: 767px) {
+  .InputNombreContactanosPortada {
+    width: 60%;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+  }
+
+  .EstiloColor {
+    position: relative;
+    top: -1px;
+  }
+
+  .ContornoFondoTitulo {
+    width: 80%;
+    height: 100%;
+  }
+
+  .BotonesExtras {
+    margin-top: -1%;
+  }
+
+  .ContornoFondoRedesSociales {
+    width: 74%;
+    height: 100%;
+  }
+
+  .ContornoFondoRedesSocialesNuevo {
+    width: 80%;
+    height: 100%;
+  }
+
+  .ContenidoRedesSociales {
+    margin-left: 20%;
+  }
+
+  .TamañoContenidoRedesSociales {
+    width: 100%;
+    height: 100%
+  }
+
+  .FondoPantalla {
+    height: 100vh;
+    position: relative;
+  }
+
+  .MedidaImagenHorario {
+    height: 450px;
+    width: 100%;
+    background-size: 100% 100%;
+
+  }
+}
+
+/* Celular pequeños */
+@media (min-width: 321px) and (max-width: 490px) {
+  .InputNombreContactanosPortada {
+    width: 60%;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+  }
+
+  .EstiloColor {
+    position: relative;
+    top: -1px;
+  }
+
+  .ContornoFondoTitulo {
+    width: 80%;
+    height: 100%;
+  }
+
+  .BotonesExtras {
+    margin-top: -1%;
+  }
+
+  .ContornoFondoRedesSociales {
+    width: 74%;
+    height: 100%;
+  }
+
+  .ContornoFondoRedesSocialesNuevo {
+    width: 80%;
+    height: 100%;
+  }
+
+  .ContenidoRedesSociales {
+    margin-left: 15%;
+  }
+
+  .TamañoContenidoRedesSociales {
+    width: 100%;
+    height: 100%
+  }
+
+  .FondoPantalla {
+    height: 100vh;
+    position: relative;
+  }
+
+  .MedidaImagenHorario {
+    height: 400px;
+    width: 100%;
+    background-size: 100% 100%;
+
+  }
+}
+
+/* Celular muy pequeños */
+@media (max-width: 320px) {
+  .InputNombreContactanosPortada {
+    width: 60%;
+    border-radius: 50%;
+    border: 1px solid #ccc;
+  }
+
+  .EstiloColor {
+    position: relative;
+    top: -1px;
+  }
+
+  .ContornoFondoTitulo {
+    width: 90%;
+    height: 80%;
+  }
+
+  .BotonesExtras {
+    margin-top: -1%;
+  }
+
+  .ContornoFondoRedesSociales {
+    width: 84%;
+    height: 50px;
+  }
+
+  .ContornoFondoRedesSocialesNuevo {
+    width: 90%;
+    height: 100%;
+  }
+
+  .ContenidoRedesSociales {
+    margin-left: 9%;
+  }
+
+  .TamañoImagenRedSocial {
+    width: 70%;
+    height: 30px;
+  }
+
+  .TamañoLetraRedSocial {
+    margin-left: -18px;
+  }
+
+  .FondoPantalla {
+    height: 75vh;
+    position: relative;
+  }
+
+  .TextoComoLlegar {
+    font-size: 10px
+  }
+
+  .DiseñoMapa {
+    width: 200px;
+  }
+
+  .MedidaImagenHorario {
+    height: 300px;
+    width: 100%;
+    background-size: 100% 100%;
+
+  }
+}

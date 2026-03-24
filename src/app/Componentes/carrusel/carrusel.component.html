@@ -1,0 +1,155 @@
+<!-- Botón para activar/desactivar el modo edición -->
+<div class="container my-3 text-end">
+    <!-- <button *ngIf="Permiso.TienePermiso('CarruselImagen', 'SubirImagen')" type="button" (click)="toggleModoEdicion()"
+        class="btn edit-main-button btn-edicion" [ngClass]="{'btn-success': modoEdicion, 'btn-light': !modoEdicion}"
+        aria-label="Alternar modo edición">
+        <i class="bi" [ngClass]="{'bi-pencil-square': !modoEdicion, 'bi-check-lg': modoEdicion}"
+            [style.color]="modoEdicion ? '#ffffff' : '#000000'"></i>
+    </button> -->
+</div>
+
+<!-- Contenedor principal del carrusel -->
+<div class="carousel-container" [attr.aria-label]="title">
+    <!-- Botones de navegación -->
+    <button type="button" class="carousel-arrow arrow-left" (click)="scrollCarousel('left')"
+        [class.d-none]="shouldCenter" aria-label="Anterior">
+        <i class="bi bi-chevron-left"></i>
+    </button>
+
+    <button type="button" class="carousel-arrow arrow-right" (click)="scrollCarousel('right')"
+        [class.d-none]="shouldCenter" aria-label="Siguiente">
+        <i class="bi bi-chevron-right"></i>
+    </button>
+
+    <!-- Contenedor de elementos del carrusel -->
+    <div #carouselContainer class="products-carousel" [ngClass]="{'mobile-view': isMobile, 'desktop-view': !isMobile}"
+        [attr.aria-live]="autoplay ? 'polite' : 'off'">
+
+        <!-- Tarjeta para añadir nueva imagen (solo en modo edición) -->
+        <div *ngIf="Permiso.TienePermiso('CarruselImagen', 'SubirImagen')" class="product-card add-card">
+            <div class="position-relative add-image-container" (click)="nuevoFileInput.click()" tabindex="0"
+                role="button" aria-label="Añadir nueva imagen" (keydown.enter)="nuevoFileInput.click()">
+                <div *ngIf="!nuevaImagen.imagenPreview" class="d-flex justify-content-center align-items-center h-100">
+                    <i class="bi bi-plus-circle-fill" style="font-size: 3rem; color: #5f5e5c;"></i>
+                </div>
+                <img *ngIf="nuevaImagen.imagenPreview" [src]="nuevaImagen.imagenPreview" class="product-image"
+                    alt="Vista previa de nueva imagen">
+
+                <div *ngIf="cargandoImagen"
+                    class="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center"
+                    style="background-color: rgba(255,255,255,0.7);">
+                    <div class="spinner-border text-primary" role="status">
+                        <span class="visually-hidden">Cargando...</span>
+                    </div>
+                </div>
+            </div>
+            <button type="button" class="btn btn-success text-white w-100 fw-bold rounded-5 mt-1"
+                [disabled]="!nuevaImagen.imagen || cargandoImagen" (click)="guardarNuevoImagen()">
+                <span *ngIf="!cargandoImagen">AÑADIR</span>
+                <span *ngIf="cargandoImagen">SUBIENDO...</span>
+            </button>
+            <input #nuevoFileInput type="file" class="file-input d-none" (change)="seleccionarImagenNuevo($event)"
+                accept="image/*" aria-label="Seleccionar imagen para añadir">
+        </div>
+
+        <!-- Tarjetas de productos existentes -->
+        <div class="product-card" *ngFor="let item of items; let i = index" [attr.data-index]="i">
+            <!-- Vista normal (visible cuando no está en edición o cuando no es el ítem en edición) -->
+            <div class="product-card-inner" *ngIf="!modoEdicion && !esItemEnEdicion(item)"
+                [attr.aria-label]="item.title || 'Producto ' + (i + 1)">
+                <img [src]="item.UrlImagen" [alt]="item.alt || 'Imagen de producto'" class="product-image">
+
+                <div class="product-info" *ngIf="item.title || item.description">
+                    <h5 class="product-title" *ngIf="item.title">{{ item.title }}</h5>
+                    <p class="product-description" *ngIf="item.description">{{ item.description }}</p>
+                </div>
+
+                <!-- Botones de edición y eliminación (visibles solo en modo edición) -->
+                <div class="edit-controls" >
+                    <button *ngIf="Permiso.TienePermiso('CarruselImagen', 'Editar')" type="button" class="btn btn-sm btn-primary edit-btn" (click)="iniciarEdicion(item)"
+                        aria-label="Editar imagen">
+                        <i class="bi bi-pencil"></i>
+                    </button>
+                    <button *ngIf="Permiso.TienePermiso('CarruselImagen', 'Eliminar')" type="button" class="btn btn-sm btn-danger delete-btn" (click)="eliminarImagen(item)"
+                        aria-label="Eliminar imagen">
+                        <i class="bi bi-trash"></i>
+                    </button>
+                </div>
+            </div>
+
+            <!-- Vista de edición (visible solo cuando está en modo edición y es el ítem en edición) -->
+            <div class="product-card-edit" *ngIf="!modoEdicion && esItemEnEdicion(item)">
+                <div class="position-relative" (click)="editFileInput.click()" tabindex="0" role="button"
+                    aria-label="Cambiar imagen" (keydown.enter)="editFileInput.click()">
+                    <img [src]="imagenEdicion.imagenPreview" class="product-image" alt="Imagen en edición">
+                    <div class="image-edit-overlay">
+                        <i class="bi bi-camera-fill"></i>
+                    </div>
+                    <div *ngIf="cargandoImagen"
+                        class="position-absolute top-0 start-0 w-100 h-100 d-flex justify-content-center align-items-center"
+                        style="background-color: rgba(255,255,255,0.7);">
+                        <div class="spinner-border text-primary" role="status">
+                            <span class="visually-hidden">Cargando...</span>
+                        </div>
+                    </div>
+                </div>
+
+                <div class="edit-form p-2">
+                    <div class="d-flex gap-2">
+                        <button type="button" class="btn btn-success btn-sm flex-grow-1" [disabled]="cargandoImagen"
+                            (click)="guardarEdicion()" aria-label="Guardar cambios">
+                            <i class="bi bi-check-lg"></i> Guardar
+                        </button>
+                        <button type="button" class="btn btn-outline-secondary btn-sm" (click)="cancelarEdicion()"
+                            aria-label="Cancelar edición">
+                            <i class="bi bi-x-lg"></i> Cancelar
+                        </button>
+                    </div>
+                </div>
+
+                <input #editFileInput type="file" class="file-input d-none" (change)="seleccionarImagenEdicion($event)"
+                    accept="image/*" aria-label="Seleccionar nueva imagen">
+            </div>
+        </div>
+    </div>
+</div>
+
+<!-- Pie del carrusel con indicadores y título -->
+<div class="carousel-footer">
+    <!-- Indicadores de paginación -->
+    <div class="carousel-indicators" *ngIf="totalItems > 1" role="tablist">
+        <span *ngFor="let item of items; let i = index" class="indicator" [ngClass]="getIndicatorClass(i)"
+            (click)="goToSlide(i)" tabindex="0" role="tab" [attr.aria-selected]="currentIndex === i"
+            [attr.aria-label]="'Ir a la imagen ' + (i + 1)" (keydown.enter)="goToSlide(i)">
+        </span>
+    </div>
+
+    <!-- Título del carrusel -->
+    <div class="carousel-title">
+        <!-- Título en modo visualización -->
+        <div>
+            <h3 [class]="titleClass">{{ title }}</h3>
+            <button *ngIf="Permiso.TienePermiso('Carrusel', 'Editar')"
+                class="btn btn-sm btn-outline-secondary ms-2" (click)="activarEdicionTitulo()">
+                <i class="bi bi-pencil"></i>
+            </button>
+            <hr class="mx-auto" style="width: 200px;">
+        </div>
+
+        <!-- Título en modo edición -->
+        <div *ngIf="editandoTitulo" class="position-relative">
+            <input type="text" class="form-control form-control-sm" [(ngModel)]="tituloTemporal"
+                placeholder="Título del carrusel">
+            <div class="edit-actions d-flex justify-content-center mt-1">
+                <button class="btn btn-sm btn-success me-1" title="Guardar cambios" (click)="guardarTitulo()">
+                    <i class="bi bi-check-lg"></i>
+                </button>
+                <button class="btn btn-sm btn-danger" title="Cancelar edición" (click)="cancelarEdicionTitulo()">
+                    <i class="bi bi-x-lg"></i>
+                </button>
+            </div>
+        </div>
+    </div>
+</div>
+
+<app-spinner-global [visible]="isLoading"></app-spinner-global>

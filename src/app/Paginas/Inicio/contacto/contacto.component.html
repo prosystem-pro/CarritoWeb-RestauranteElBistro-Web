@@ -1,0 +1,410 @@
+<!-- Fondo de la página -->
+<div *ngIf="ContactanosPortada" class=" w-100 FondoPantalla" style="  padding: 0;" [ngStyle]="{
+    'background-image': 'url(' + ContactanosPortada.UrlImagenContactanosPortada + ')',
+    'background-size': 'cover',
+    'background-position': 'center',
+    'background-repeat': 'no-repeat',
+  }">
+
+  
+  <!-- Subir imagen fondo de página -->
+  <div class="container position-relative" style="position: relative; top: 20px;"
+    *ngIf="Permiso.TienePermiso('ContactanosPortada', 'SubirImagen')">
+    <label class="rounded-circle d-flex align-items-center justify-content-center" style="width: 45px; height: 45px; cursor: pointer;
+         background-color: #ffffff;
+         box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+         position: absolute;
+         z-index: 10;">
+      <i class="bi bi-camera text-black fs-5"></i>
+      <input type="file" (change)="ActualizarImagenContactanosPortada($event)" accept="image/*" hidden>
+    </label>
+  </div>
+
+  <!-- Titulo, colores y contorno -->
+  <div class="position-relative" *ngIf="ContactanosPortada">
+    <div style="height: 60px;"></div>
+    <!-- Botones de edición -->
+    <div class="position-absolute top-0 end-0 d-flex gap-2 me-5 mt-3 z-3">
+
+      <!-- Botón de lápiz -->
+      <label *ngIf="Permiso.TienePermiso('ContactanosPortada', 'Editar') && Permiso.TienePermiso('ContactanosPortada', 'Crear') && !MostrarTitulo" (click)="MostrarTitulo = true"
+        class="btn btn-sm rounded-circle d-flex align-items-center justify-content-center shadow"
+        style="width: 45px; height: 45px; cursor: pointer; background-color: #fff; position: relative;">
+        <i class="bi bi-pencil-square text-black"></i>
+      </label>
+
+      <!-- Botón de guardar -->
+      <button *ngIf="MostrarTitulo" class="btn btn-sm d-flex align-items-center justify-content-center shadow"
+        style="background-color: black; border: none; width: 36px; height: 36px; border-radius: 50%; position: relative;"
+        (click)="GuardarContactanosPortada()">
+        <i class="bi bi-check-lg text-white"></i>
+      </button>
+
+      <!-- Botón de cancelar -->
+      <button *ngIf="MostrarTitulo" (click)="MostrarTitulo = false"
+        class="btn btn-sm d-flex align-items-center justify-content-center shadow"
+        style="background-color: black; border: none; width: 36px; height: 36px; border-radius: 50%; position: relative;">
+        <i class="bi bi-x-lg text-white"></i>
+      </button>
+    </div>
+
+    <!-- CONTENIDO -->
+    <div class="row justify-content-center mt-5">
+      <div class="col-12 col-md-8">
+        <div class="position-relative p-3 text-center mb-2 d-flex align-items-center justify-content-center"
+          style="overflow: hidden; border-radius: 1rem;">
+
+          <!-- Fondo decorativo -->
+          <div class="position-absolute top-0 start-50 translate-middle-x ContornoFondoTitulo" [ngStyle]="{
+               'background-color': ContactanosPortada.ColorFondoNombreContactanosPortada + 'a0',
+               'border': '5px solid ' + ContactanosPortada.ColorContornoNombreContactanosPortada,
+               'border-radius': '3rem',
+               'z-index': '0'
+             }">
+          </div>
+
+          <!-- Contenido -->
+          <div class="position-relative w-100 z-1 px-4 ">
+            <div class="d-flex flex-column flex-md-row align-items-center justify-content-center gap-3">
+
+              <!-- Título en modo vista -->
+              <div *ngIf="!MostrarTitulo" class="fw-bold fs-2 text-center" 
+                [style.color]="ContactanosPortada.ColorNombreContactanosPortada">
+                {{ ContactanosPortada.NombreContactanosPortada }}
+              </div>
+
+              <!-- Modo edición -->
+              <div *ngIf="MostrarTitulo"
+                class="d-flex flex-column flex-md-row w-100 justify-content-center align-items-center gap-3">
+                <input type="text" [(ngModel)]="ContactanosPortada.NombreContactanosPortada" name="nombre"
+                  class="form-control text-center InputNombreContactanosPortada" placeholder="Editar texto"
+                  style="border-radius: 1rem; padding: 10px;" />
+
+                <!-- Colores -->
+                <div class="d-flex gap-2 align-items-center">
+                  <div class="text-center">
+                    <label class="form-label small mb-1 px-1 rounded bg-black text-white EstiloColor">Fondo</label>
+                    <input type="color" [(ngModel)]="ContactanosPortada.ColorFondoNombreContactanosPortada"
+                      name="colorFondo" class="form-control form-control-color EstiloColor"
+                      style="width: 30px; height: 30px;" />
+                  </div>
+                  <div class="text-center">
+                    <label class="form-label small mb-1 px-1 rounded bg-black text-white EstiloColor">Texto</label>
+                    <input type="color" [(ngModel)]="ContactanosPortada.ColorNombreContactanosPortada"
+                      name="colorNombre" class="form-control form-control-color EstiloColor"
+                      style="width: 30px; height: 30px;" />
+                  </div>
+                  <div class="text-center">
+                    <label class="form-label small mb-1 px-1 rounded bg-black text-white EstiloColor">Contorno</label>
+                    <input type="color" [(ngModel)]="ContactanosPortada.ColorContornoNombreContactanosPortada"
+                      name="colorContorno" class="form-control form-control-color EstiloColor"
+                      style="width: 30px; height: 30px;" />
+                  </div>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Nuevos botones de edición de colores -->
+  <div *ngIf="MostrarTitulo" class="d-flex justify-content-center align-items-start gap-4 BotonesExtras mb-2">
+    <div class="text-center">
+      <label class="form-label small mb-1 px-2 rounded" style="background-color: black; color: white;">
+        Fondo Red Social
+      </label>
+      <input type="color" [(ngModel)]="ContactanosPortada.ColorFondoRedSocial" name="colorFondoRedSocial"
+        class="form-control form-control-color mx-auto" style="width: 35px; height: 35px; padding: 0;" />
+    </div>
+    <div class="text-center">
+      <label class="form-label small mb-1 px-2 rounded" style="background-color: black; color: white;">
+        Contorno Red Social
+      </label>
+      <input type="color" [(ngModel)]="ContactanosPortada.ColorContornoRedSocial" name="colorContornoRedSocial"
+        class="form-control form-control-color mx-auto" style="width: 35px; height: 35px; padding: 0;" />
+    </div>
+    <div class="text-center">
+      <label class="form-label small mb-1 px-2 rounded" style="background-color: black; color: white;">
+        Texto Red Social
+      </label>
+      <input type="color" [(ngModel)]="ContactanosPortada.ColorTextoRedSocial" name="colorTextoRedSocial"
+        class="form-control form-control-color mx-auto" style="width: 35px; height: 35px; padding: 0;" />
+    </div>
+  </div>
+
+  <!-- Redes Sociales -->
+  <div *ngFor="let red of OcultarRedSocialInactivos(); let i = index"
+    class="mb-3 d-flex justify-content-center position-relative">
+
+    <!-- CONTENIDO PRINCIPAL -->
+    <div class="d-flex align-items-center gap-3 px-4 py-2 position-relative ContornoFondoRedesSociales" [ngStyle]="{
+         'background-color': ContactanosPortada.ColorFondoRedSocial,
+         'border': '4px solid ' + ContactanosPortada.ColorContornoRedSocial,
+         'border-radius': '3rem',
+         'box-shadow': '0 4px 10px rgba(0,0,0,0.2)'
+       }">
+
+      <!-- Switch real -->
+      <div *ngIf="Permiso.TienePermiso('RedSocial', 'Editar')" class="position-absolute top-0 start-0 ms-4 mt-2" style="z-index: 3;">
+        <div class="form-check form-switch">
+          <input class="form-check-input toggle-red-social" type="checkbox" role="switch" [checked]="red.Estatus === 1"
+            (change)="DesactivarRedSocial(i, $event)" style="transform: scale(1.2); cursor: pointer;"
+            [ngClass]="{'activo': red.Estatus === 1, 'desactivado': red.Estatus !== 1}" />
+        </div>
+      </div>
+
+      <!-- IMAGEN -->
+      <div class="d-flex align-items-center position-relative ContenidoRedesSociales"
+        style="width: 50px; height: 50px;">
+        <a *ngIf="red.Link; else imagenSinLink" [href]="red.Estatus === 1 ? red.Link : null" target="_blank"
+          [attr.tabindex]="red.Estatus === 1 ? 0 : -1" style="display: block; border-radius: 50%;"
+          (click)="CrearReporteRedSocial(red.CodigoRedSocial)">
+          <img *ngIf="red.Imagenes?.length > 0" [src]="red.Imagenes[0]?.UrlImagen" [alt]="red.NombreRedSocial"
+            style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%; box-shadow: 0 0 5px rgba(0,0,0,0.3);" />
+        </a>
+        <ng-template #imagenSinLink>
+          <img *ngIf="red.UrlImagen" [src]="red.UrlImagen" [alt]="red.NombreRedSocial"
+            style="width: 100%; height: 100%; object-fit: cover; border-radius: 50%; box-shadow: 0 0 5px rgba(0,0,0,0.3);" />
+        </ng-template>
+
+        <!-- Botón cámara -->
+        <label *ngIf="Permiso.TienePermiso('RedSocialImagen', 'SubirImagen')"
+          class="position-absolute bottom-0 end-0 bg-white rounded-circle d-flex align-items-center justify-content-center"
+          style="width: 18px; height: 18px; cursor: pointer; box-shadow: 0px 2px 5px rgba(0,0,0,0.3);">
+          <i class="bi bi-camera-fill text-black fs-6"></i>
+          <input type="file" accept="image/*" hidden (change)="ActualizarImagenRedSocial($event, i)"
+            [disabled]="red.Estatus !== 1">
+        </label>
+      </div>
+
+      <!-- TEXTO O INPUTS -->
+      <div class="d-flex flex-column justify-content-center flex-grow-1">
+        <ng-container *ngIf="!MostrarListado[i]">
+          <a *ngIf="red.Link" [href]="red.Link" target="_blank" class="fw-semibold TamañoLetraRedSocial"
+            [style.color]="ContactanosPortada.ColorTextoRedSocial" style="text-decoration: none;"
+            (click)="CrearReporteRedSocial(red.CodigoRedSocial)">
+            {{ red.NombreRedSocial }}
+          </a>
+          <span *ngIf="!red.Link" class="fw-semibold TamañoLetraRedSocial"
+            [style.color]="ContactanosPortada.ColorTextoRedSocial">
+            {{ red.NombreRedSocial }}
+          </span>
+        </ng-container>
+
+        <div *ngIf="MostrarListado[i]" class="d-flex flex-column gap-2">
+          <input type="text" class="form-control" [(ngModel)]="red.NombreRedSocial"
+            placeholder="Nombre de la red social" [disabled]="red.Estatus !== 1"
+            style="background-color: rgba(211, 211, 211, 0.8); border-radius: 10px; padding: 5px;">
+          <input type="text" class="form-control" [(ngModel)]="red.Link" placeholder="Enlace de la red social"
+            [disabled]="red.Estatus !== 1"
+            style="background-color: rgba(211, 211, 211, 0.8); border-radius: 10px; padding: 5px;">
+        </div>
+      </div>
+
+      <!-- BOTONES -->
+      <div class="d-flex flex-column align-items-center justify-content-center gap-1 ms-2">
+        <label *ngIf="!MostrarListado[i] && Permiso.TienePermiso('RedSocial', 'Editar')"
+          class="bg-white rounded-circle d-flex align-items-center justify-content-center"
+          style="width: 30px; height: 30px; cursor: pointer; box-shadow: 0px 2px 5px rgba(0,0,0,0.3);"
+          (click)="MostrarListado[i] = true">
+          <i class="bi bi-pencil-fill text-black fs-6"></i>
+        </label>
+
+        <button *ngIf="!MostrarListado[i] && Permiso.TienePermiso('RedSocial', 'Eliminar')" class="btn btn-sm"
+          style="width: 30px; height: 30px; padding: 0; background-color: #dc3545; color: white; border: none;"
+          (click)="EliminarRedSocial(i)" [disabled]="red.Estatus !== 1">
+          <i class="bi bi-x-lg fs-6"></i>
+        </button>
+
+        <button *ngIf="MostrarListado[i] && Permiso.TienePermiso('RedSocial', 'Editar')" class="btn btn-success btn-sm"
+          (click)="EditarRedSocial(i); MostrarListado[i] = false" [disabled]="red.Estatus !== 1">
+          <i class="bi bi-check-lg"></i>
+        </button>
+
+        <button *ngIf="MostrarListado[i]" class="btn btn-danger btn-sm" (click)="MostrarListado[i] = false"
+          [disabled]="red.Estatus !== 1">
+          <i class="bi bi-x-lg"></i>
+        </button>
+      </div>
+    </div>
+
+    <!-- CAPA QUE BLOQUEA TODO MENOS EL SWITCH -->
+    <div *ngIf="red.Estatus !== 1" class="position-absolute  ContornoFondoRedesSociales"
+      style="background-color: rgba(255, 255, 255, 0.6); border-radius: 3rem; z-index: 2;">
+    </div>
+
+  </div>
+
+
+  <!-- Crear nueva Rede Social -->
+  <div class="container" *ngIf="Permiso.TienePermiso('RedSocial', 'Crear')">
+    <div class="d-flex justify-content-center position-relative">
+      <div
+        class="d-flex align-items-center justify-content-center gap-3 py-4 position-relative ContornoFondoRedesSocialesNuevo"
+        [ngStyle]="{
+           'background-color': ContactanosPortada.ColorFondoRedSocial,
+           'border': '4px solid ' + ContactanosPortada.ColorContornoRedSocial,
+           'border-radius': '3rem',
+           'box-shadow': '0 4px 10px rgba(0,0,0,0.2)',
+           'min-height': '80px'
+         }">
+
+        <!-- Botón "+" para agregar nueva red social -->
+        <div *ngIf="!MostrarCrearRedSocial" class="d-flex justify-content-center align-items-center"
+          style="position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%);">
+          <label class="bg-white rounded-circle d-flex align-items-center justify-content-center"
+            style="width: 45px; height: 45px; cursor: pointer; box-shadow: 0px 4px 10px rgba(0,0,0,0.3);"
+            (click)="MostrarCrearRedSocial = true">
+            <i class="bi bi-plus-circle-fill text-black fs-4"></i>
+          </label>
+        </div>
+
+        <!-- Área de formulario para nueva red social -->
+        <div *ngIf="MostrarCrearRedSocial" class="w-100 d-flex align-items-center justify-content-center gap-2 ">
+
+          <!-- Imagen temporal -->
+          <label *ngIf="ImagenTemporal" class="d-flex align-items-center justify-content-center bg-white"
+            style="width: 125px; height: 35px; border: 2px solid black; border-radius: 50%; cursor: pointer; box-shadow: 0px 4px 10px rgba(0,0,0,0.3);">
+            <img [src]="ImagenTemporal" alt="Imagen de red social"
+              style="width: 100%; height: 100%; border-radius: 50%; object-fit: cover;">
+          </label>
+
+          <!-- Ícono de cámara si no hay imagen -->
+          <label *ngIf="!ImagenTemporal && Permiso.TienePermiso('RedSocialImagen', 'SubirImagen')" class="d-flex align-items-center justify-content-center bg-white"
+            style="width: 125px; height: 35px; border: 2px solid black; border-radius: 50%; cursor: pointer; box-shadow: 0px 4px 10px rgba(0,0,0,0.3);">
+            <i class="bi bi-image fs-5 text-dark"></i>
+            <input type="file" accept="image/*" hidden (change)="ActualizarImagenRedSocialTemporal($event, null)">
+          </label>
+
+          <!-- Inputs -->
+          <input #NombreRedSocial type="text" class="form-control" placeholder="Nombre de la red social"
+            style="border-radius: 10px; font-size: 0.85rem; padding: 0.45rem 0.5rem;" />
+
+          <input #Link type="text" class="form-control" placeholder="Link" style="border-radius: 10px;" />
+
+          <!-- Botón de check -->
+          <button class="btn btn-primary form-control-sm"
+            (click)="CrearRedSocial(NombreRedSocial.value, Link.value); NombreRedSocial.value=''; Link.value=''; MostrarCrearRedSocial = false;">
+            <i class="bi bi-plus-lg"></i>
+          </button>
+
+          <!-- Botón de cancelar -->
+          <button class="btn btn-danger" (click)="MostrarCrearRedSocial = false">
+            <i class="bi bi-x-lg"></i>
+          </button>
+
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+
+
+<div class="container p-0 py-2 position-relative  ">
+<div *ngIf="ContactanosPortada"
+  class="  MedidaImagenHorario"
+  [ngStyle]="{
+    'background-image': 'url(' + ContactanosPortada.UrlImagenHorario + ')',
+    'background-position': 'center',
+    'background-repeat': 'no-repeat',
+  }">
+</div>
+
+
+
+  <label *ngIf="Permiso.TienePermiso('ContactanosPortada', 'SubirImagen')"
+    class="rounded-circle d-flex align-items-center justify-content-center"
+    style="
+      width: 45px;
+      height: 45px;
+      cursor: pointer;
+      background-color: #ffffff;
+      box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);
+      position: absolute;
+      top: 10px;
+      left: 10px;
+      z-index: 10;">
+    <i class="bi bi-camera text-black fs-5"></i>
+    <input type="file" (change)="ActualizarImagenHorario($event)" accept="image/*" hidden>
+  </label>
+</div>
+
+
+<!-- Mapa de Google Maps a pantalla completa -->
+<div class="w-100 position-relative ">
+  <!-- Botón de edición (pencil) -->
+  <div *ngIf="!MostrarMapa" class="position-absolute top-0 end-0 me-3 mt-0 z-3">
+    <button *ngIf="Permiso.TienePermiso('ContactanosPortada', 'Editar')" class="btn p-1 d-flex align-items-center justify-content-center"
+      style="background-color: white; border: 1px solid #ccc; border-radius: 50%; box-shadow: 0 2px 6px rgba(0,0,0,0.2); width: 45px; height: 45px;"
+      (click)="MostrarMapa = true; ContactanosPortada.UrlMapa = ''">
+      <i class="bi bi-pencil-square text-black fs-6"></i>
+    </button>
+  </div>
+
+  <!-- Panel de edición del enlace del mapa -->
+  <div *ngIf="MostrarMapa"
+    class="position-absolute top-0 end-0 me-3 mt-2 bg-white rounded-3 shadow-lg z-3 p-3 border DiseñoMapa">
+    <h6 class="fw-bold text-primary mb-3 d-flex align-items-center">
+      <i class="bi bi-geo-alt-fill me-2 text-danger"></i> Editar ubicación
+    </h6>
+    <div class="input-group input-group-sm mb-3 position-relative">
+      <input type="text" class="form-control shadow-sm" placeholder="Nuevo enlace de Google Maps"
+        [(ngModel)]="ContactanosPortada.UrlMapa">
+      <button type="button" class="btn btn-sm btn-danger position-absolute end-0 top-0 bottom-0" style="z-index: 5;"
+        (click)="ContactanosPortada.UrlMapa = ''" *ngIf="ContactanosPortada.UrlMapa">
+        &times;
+      </button>
+    </div>
+    <div class="border-top pt-3 mb-3">
+      <label class="form-label fw-semibold small">Texto del botón</label>
+      <input type="text" class="form-control form-control-sm mb-2 shadow-sm"
+        [(ngModel)]="ContactanosPortada.TextoComoLlegar">
+      <label class="form-label fw-semibold small">Color del texto</label>
+      <input type="color" class="form-control form-control-sm mb-2"
+        [(ngModel)]="ContactanosPortada.ColorTextoComoLlegar">
+      <label class="form-label fw-semibold small">Color de fondo</label>
+      <input type="color" class="form-control form-control-sm mb-2"
+        [(ngModel)]="ContactanosPortada.ColorBotonComoLlegar">
+      <label class="form-label fw-semibold small">URL al hacer clic</label>
+      <input type="text" class="form-control form-control-sm shadow-sm" 
+        [(ngModel)]="ContactanosPortada.UrlMapaComoLlegar">
+    </div>
+
+    <div class="d-flex justify-content-center gap-2 mt-3">
+      <button class="btn btn-outline-secondary btn-sm px-3"
+        (click)="MostrarMapa = false; ContactanosPortada.UrlMapa = ''">
+        <i class="bi bi-x-lg me-1"></i> Cancelar
+      </button>
+      <button class="btn btn-success btn-sm px-3" (click)="GuardarContactanosPortada(); MostrarMapa = false">
+        <i class="bi bi-check-lg me-1"></i> Guardar
+      </button>
+    </div>
+  </div>
+
+  <!-- Contenedor del mapa y botón "Cómo llegar" -->
+  <div class="position-relative">
+    <div class="d-flex justify-content-center" *ngIf="MapaSeguro">
+      <iframe [src]="MapaSeguro" width="100%" height="500" style="border:0; box-shadow: 0 4px 12px rgba(0,0,0,0.15);"
+        allowfullscreen loading="lazy" referrerpolicy="no-referrer-when-downgrade">
+      </iframe>
+    </div>
+    <!-- Botón "Cómo llegar" flotante sobre el mapa -->
+    <div class="position-absolute bottom-0 start-50 translate-middle-x mb-3">
+      <a *ngIf="ContactanosPortada?.UrlMapaComoLlegar" [href]="ContactanosPortada.UrlMapaComoLlegar" target="_blank"
+        class="btn TextoComoLlegar" [ngStyle]="{
+           'background-color': ContactanosPortada.ColorBotonComoLlegar,
+           'color': ContactanosPortada.ColorTextoComoLlegar,
+           'font-weight': 'bold',
+           'border-radius': '10px',
+           'box-shadow': '0 4px 8px rgba(0,0,0,0.2)'
+         }">
+        {{ ContactanosPortada.TextoComoLlegar || 'COMO LLEGAR' }}
+      </a>
+    </div>
+
+  </div>
+</div>
+
+<app-spinner-global [visible]="isLoading"></app-spinner-global>

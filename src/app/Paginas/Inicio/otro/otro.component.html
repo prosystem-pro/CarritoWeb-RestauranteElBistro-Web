@@ -1,0 +1,274 @@
+<!-- PORTADA OTRO NOMBRE Y DESCRIPCION -->
+<div *ngIf="PortadaOtro">
+  <div [style.backgroundColor]="PortadaOtro.ColorFondoNombrePortadaOtro"
+    style="position: relative; padding: 3.5rem 2rem 2rem; border-radius: 8px; margin-bottom: 1rem;">
+
+    <!-- Botones de edición -->
+    <div style="position: absolute; top: 0.5rem; right: 0.5rem; display: flex; gap: 0.25rem;">
+      <button *ngIf="!MostrarPortadaOtro && Permiso.TienePermiso('PortadaOtro', 'Crear') && Permiso.TienePermiso('PortadaOtro', 'Editar')" (click)="MostrarPortadaOtro = true"
+        class="btn btn-sm shadow-sm" title="Editar"
+        style="background-color: #f8f9fa; border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+        <i class="bi bi-pencil-square fs-6"></i>
+      </button>
+      <ng-container *ngIf="MostrarPortadaOtro">
+        <button (click)="GuardarPortadaOtro()" class="btn btn-sm btn-success shadow-sm" title="Guardar"
+          style="border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+          <i class="bi bi-check fs-6"></i>
+        </button>
+        <button (click)="MostrarPortadaOtro = false" class="btn btn-sm btn-danger shadow-sm" title="Cancelar"
+          style="border-radius: 50%; width: 32px; height: 32px; display: flex; align-items: center; justify-content: center;">
+          <i class="bi bi-x fs-6"></i>
+        </button>
+      </ng-container>
+    </div>
+    <!-- Título -->
+    <h2 [style.color]="PortadaOtro.ColorNombrePortadaOtro" class="TamaloTextoTitulo"
+      style="margin: 0; font-weight: bold; text-align: center;">
+      <ng-container *ngIf="!MostrarPortadaOtro">{{ PortadaOtro.NombrePortadaOtro }}</ng-container>
+      <input *ngIf="MostrarPortadaOtro" type="text" [(ngModel)]="PortadaOtro.NombrePortadaOtro"
+        [style.color]="PortadaOtro.ColorNombrePortadaOtro"
+        style="font-size: 1.5rem; text-align: center; border: none; background: transparent; width: 100%;" />
+    </h2>
+
+    <!-- Controles de color del título -->
+    <div *ngIf="MostrarPortadaOtro"
+      style="position: absolute; bottom: 1.5rem; right: 0.75rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+
+      <div style="text-align: center;">
+        <div
+          style="font-size: 0.6rem; background: white; color: black; padding: 0 4px; border-radius: 4px; margin-bottom: 2px;">
+          Texto
+        </div>
+        <input type="color" [(ngModel)]="PortadaOtro.ColorNombrePortadaOtro" title="Color texto"
+          style="width: 28px; height: 28px; border: none; padding: 0;" />
+      </div>
+
+      <div style="text-align: center;">
+        <div
+          style="font-size: 0.6rem; background: white; color: black; padding: 0 4px; border-radius: 4px; margin-bottom: 2px;">
+          Fondo
+        </div>
+        <input type="color" [(ngModel)]="PortadaOtro.ColorFondoNombrePortadaOtro" title="Color fondo"
+          style="width: 28px; height: 28px; border: none; padding: 0;" />
+      </div>
+    </div>
+
+  </div>
+
+  <!-- Descripción -->
+  <div [style.backgroundColor]="PortadaOtro.ColorDescripcionOtro"
+    style="padding: 1.25rem; border-radius: 8px; position: relative;">
+    <p [style.color]="PortadaOtro.ColorDescripcion" style="margin: 0; font-size: 1.25rem;">
+      <ng-container *ngIf="!MostrarPortadaOtro">{{ PortadaOtro.Descripcion }}</ng-container>
+      <textarea *ngIf="MostrarPortadaOtro" [(ngModel)]="PortadaOtro.Descripcion"
+        [style.color]="PortadaOtro.ColorDescripcion"
+        style="width: 100%; border: none; background: transparent; font-size: 1rem;"></textarea>
+    </p>
+
+    <!-- Controles de color de descripción -->
+    <div *ngIf="MostrarPortadaOtro"
+      style="position: absolute; bottom: 2.5rem; right: 0.75rem; display: flex; gap: 0.5rem; flex-wrap: wrap;">
+
+      <div style="text-align: center; ">
+        <div
+          style="font-size: 0.6rem; background: white; color: black; padding: 0 4px; border-radius: 4px; margin-bottom: 2px;">
+          Texto
+        </div>
+        <input type="color" [(ngModel)]="PortadaOtro.ColorDescripcion" title="Color texto"
+          style="width: 28px; height: 28px; border: none; padding: 0;" />
+      </div>
+
+      <div style="text-align: center;">
+        <div
+          style="font-size: 0.6rem; background: white; color: black; padding: 0 4px; border-radius: 4px; margin-bottom: 2px;">
+          Fondo
+        </div>
+        <input type="color" [(ngModel)]="PortadaOtro.ColorDescripcionOtro" title="Color fondo"
+          style="width: 28px; height: 28px; border: none; padding: 0;" />
+      </div>
+    </div>
+
+  </div>
+</div>
+<!-- ********************************* -->
+
+<!-- LISTADO DEL MODELO OTRO -->
+<div *ngFor="let item of Otro; let i = index" class="mb-2 position-relative">
+  <!-- Contenedor de las dos imágenes -->
+  <div style="display: flex; gap: 1rem; flex-wrap: wrap; justify-content: center; align-items: center;">
+    <!-- Imagen 1 -->
+    <div class="MedidaImagenOtros" style="position: relative; border-radius: 8px; overflow: hidden; aspect-ratio: 1/1;">
+      <img *ngIf="item.UrlImagen" [src]="item.UrlImagen" alt="Imagen de Otro"
+        style="width: 100%; height: 100%; object-fit: cover; display: block;">
+
+      <!-- Botón de actualizar imagen 1 -->
+      <label *ngIf="Permiso.TienePermiso('Otro', 'SubirImagen')"
+        class="position-absolute d-flex align-items-center justify-content-center EditarEliminar" style="top: 10px; right: 10px; background-color: rgba(255, 255, 255, 0.9); border-radius: 50%; cursor: pointer;
+             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);">
+        <i class="bi bi-camera text-dark fs-5"
+         (click)=" UrlImagenTemporal = ''; UrlImagenTemporal2=''; CodigoTemporal=''"></i>
+        
+        <input type="file" (change)="ActualizarImagenOtro($event, i, null)" accept="image/*" hidden >
+      </label>
+    </div>
+
+    <!-- Imagen 2 -->
+    <div class="MedidaImagenOtros" style="position: relative; border-radius: 8px; overflow: hidden; aspect-ratio: 1/1;">
+      <img *ngIf="item.UrlImagen2" [src]="item.UrlImagen2" alt="Segunda Imagen de Otro"
+        style="width: 100%; height: 100%; object-fit: cover; display: block;">
+
+      <!-- Botón de eliminar (general) -->
+      <button *ngIf="!MostrarListado[i] && Permiso.TienePermiso('Otro', 'Eliminar')"
+        class="btn btn-sm d-flex align-items-center justify-content-center EditarEliminar" style="position: absolute; bottom: 10px; right: 10px; background-color: #dc3545; color: white; border: none; border-radius: 50%;
+             box-shadow: 0 2px 6px rgba(0, 0, 0, 0.3);" (click)="EliminarOtro(i)">
+        <i class="bi bi-trash fs-6"></i>
+      </button>
+
+      <!-- Botón de actualizar imagen 2 -->
+      <label *ngIf="Permiso.TienePermiso('Otro', 'SubirImagen')"
+        class="position-absolute d-flex align-items-center justify-content-center EditarEliminar" style="top: 10px; right: 10px; background-color: rgba(255, 255, 255, 0.9); border-radius: 50%; cursor: pointer;
+             box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);">
+        <i class="bi bi-camera text-dark fs-5"
+         (click)=" UrlImagenTemporal = ''; UrlImagenTemporal2=''; CodigoTemporal=''"></i>
+        <input type="file" (change)="ActualizarImagen2Otro($event, i, null)" accept="image/*" hidden>
+      </label>
+    </div>
+  </div>
+
+  <!-- Contenedor de controles -->
+  <div *ngIf="MostrarListado[i]" class="my-3 d-flex justify-content-end align-items-center gap-2 flex-wrap">
+    <!-- Negrita -->
+    <button class="btn btn-sm shadow-none" style="background-color: #f1f3f5; color: #212529; border-radius: 0.5rem;"
+      (click)="FormatoTexto('bold')" title="Negrita">
+      <i class="bi bi-type-bold fs-7"></i>
+    </button>
+    <!-- Cursiva -->
+    <button class="btn btn-sm shadow-none" style="background-color: #f1f3f5; color: #212529; border-radius: 0.5rem;"
+      (click)="FormatoTexto('italic')" title="Cursiva">
+      <i class="bi bi-type-italic fs-7"></i>
+    </button>
+    <!-- Tamaño de texto -->
+    <select class="form-select form-select-sm shadow-none"
+      style="width: auto; height: 32px; background-color: #f1f3f5; color: #212529; border: none; border-radius: 0.5rem; padding: 0 0.5rem; font-size: 1rem;"
+      (change)="CambiarTamanoTexto($event)" title="Tamaño texto">
+      <option disabled selected>🔠</option>
+      <option value="1">Muy pequeño</option>
+      <option value="2">Pequeño</option>
+      <option value="3">Normal</option>
+      <option value="4">Grande</option>
+      <option value="5">Muy grande</option>
+      <option value="6">Enorme</option>
+      <option value="7">Máximo</option>
+    </select>
+    <!-- Guardar -->
+    <button class="btn btn-sm shadow-sm" style="background-color: #198754; color: white; border-radius: 0.5rem;"
+      (click)="GuardarOtro(i)" title="Guardar">
+      <i class="bi bi-check-lg fs-7"></i>
+    </button>
+    <!-- Cancelar -->
+    <button class="btn btn-sm shadow-sm" style="background-color: #dc3545; color: white; border-radius: 0.5rem;"
+      (click)="MostrarListado[i] = false" title="Cancelar">
+      <i class="bi bi-x-lg fs-7"></i>
+    </button>
+  </div>
+  <!-- Botón de edición (cuando no está en modo edición) -->
+  <div *ngIf="!MostrarListado[i] && Permiso.TienePermiso('Otro', 'Editar')" class="mt-2 d-flex justify-content-end">
+    <button (click)="MostrarListado[i] = true" class="btn btn-sm shadow-sm " title="Editar"
+      style="background-color: #f8f9fa; border-radius: 50%; width: 45px; height: 45px; padding: 0; display: flex; align-items: center; justify-content: center;">
+      <i class="bi bi-pencil-square"></i>
+    </button>
+  </div>
+  <!-- Descripción -->
+  <div class="TextoDescripcion" style="margin-top:1rem; margin-bottom: 1rem; font-size: 1rem; color: #333;">
+    <div *ngIf="!MostrarListado[i]" [innerHTML]="getSafeHtml(item.Descripcion)"></div>
+    <div *ngIf="MostrarListado[i]" contenteditable="true" class="border rounded p-2" style="min-height: 100px;"
+      [attr.id]="'editor-' + i">
+    </div>
+  </div>
+</div>
+<!-- *********************** -->
+
+
+<!-- SECCION PARA AGREGAR UN NUEVO -->
+<!-- Botón de agregar centrado y circular -->
+<div *ngIf="!MostrarAgregarOtro && Permiso.TienePermiso('Otro', 'Crear')" class="d-flex justify-content-center my-4">
+  <button class="btn btn-light rounded-circle shadow" style="width: 60px; height: 60px;"
+    (click)="MostrarAgregarOtro = true; UrlImagenTemporal = ''; UrlImagenTemporal2=''; CodigoTemporal=''">
+    <i class="bi bi-plus-lg fs-4"></i>
+  </button>
+</div>
+<!-- Sección para agregar un nuevo item -->
+<div *ngIf="MostrarAgregarOtro" class="d-flex flex-wrap gap-3 align-items-start my-4">
+  <!-- Imagen #1 para cargar (sin mostrar la imagen subida) -->
+  <div class="ImagenTemporal"
+    style="flex: 1;margin-top:38px; min-width: 250px; max-width: 400px; position: relative; height: 250px; background-color: #f8f9fa; border-radius: 8px; border: 2px dashed #ccc; display: flex; justify-content: center; align-items: center;">
+    <!-- Si existe una URL de imagen temporal, mostrar la imagen -->
+    <div *ngIf="UrlImagenTemporal">
+      <img [src]="UrlImagenTemporal" alt="Imagen cargada"
+        style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+    </div>
+    <!-- Si no existe una URL de imagen temporal, mostrar el ícono de la cámara -->
+    <label *ngIf="!UrlImagenTemporal && Permiso.TienePermiso('Otro', 'SubirImagen')"
+      class="d-flex align-items-center justify-content-center"
+      style="position: absolute; z-index: 1; width: 50px; height: 50px; background-color: rgba(255, 255, 255, 0.9); border-radius: 50%; cursor: pointer; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);">
+      <i class="bi bi-camera text-dark fs-5"></i>
+      <input type="file" (change)="ActualizarImagenOtro($event, null,'Si')" accept="image/*" hidden>
+    </label>
+  </div>
+
+  <!-- Imagen #2 para cargar (sin mostrar la imagen subida) -->
+  <div class="ImagenTemporal"
+    style="flex: 1;margin-top:38px; min-width: 250px; max-width: 400px; position: relative; height: 250px; background-color: #f8f9fa; border-radius: 8px; border: 2px dashed #ccc; display: flex; justify-content: center; align-items: center;">
+    <!-- Si existe una URL de imagen temporal, mostrar la imagen -->
+    <div *ngIf="UrlImagenTemporal2">
+      <img [src]="UrlImagenTemporal2" alt="Imagen cargada"
+        style="width: 100%; height: 100%; object-fit: cover; border-radius: 8px;">
+    </div>
+    <!-- Si no existe una URL de imagen temporal, mostrar el ícono de la cámara -->
+    <label *ngIf="!UrlImagenTemporal2 && Permiso.TienePermiso('Otro', 'SubirImagen')"
+      class="d-flex align-items-center justify-content-center"
+      style="position: absolute; z-index: 1; width: 50px; height: 50px; background-color: rgba(255, 255, 255, 0.9); border-radius: 50%; cursor: pointer; box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.3);">
+      <i class="bi bi-camera text-dark fs-5"></i>
+      <input type="file" (change)="ActualizarImagen2Otro($event, null,'Si')" accept="image/*" hidden>
+    </label>
+  </div>
+  <!-- Controles de texto y descripción a la derecha -->
+  <div style="flex: 2; min-width: 250px;">
+    <!-- Controles -->
+    <div class="d-flex justify-content-end align-items-center gap-2 flex-wrap mb-2">
+      <button class="btn btn-sm shadow-none" style="background-color: #f1f3f5; color: #212529; border-radius: 0.5rem;"
+        (click)="FormatoTexto('bold')" title="Negrita">
+        <i class="bi bi-type-bold fs-7"></i>
+      </button>
+      <button class="btn btn-sm shadow-none" style="background-color: #f1f3f5; color: #212529; border-radius: 0.5rem;"
+        (click)="FormatoTexto('italic')" title="Cursiva">
+        <i class="bi bi-type-italic fs-7"></i>
+      </button>
+      <select class="form-select form-select-sm shadow-none"
+        style="width: auto; height: 32px; background-color: #f1f3f5; color: #212529; border: none; border-radius: 0.5rem; padding: 0 0.5rem; font-size: 1rem;"
+        (change)="CambiarTamanoTexto($event)" title="Tamaño texto">
+        <option disabled selected>🔠</option>
+        <option value="1">Muy pequeño</option>
+        <option value="2">Pequeño</option>
+        <option value="3">Normal</option>
+        <option value="4">Grande</option>
+        <option value="5">Muy grande</option>
+        <option value="6">Enorme</option>
+        <option value="7">Máximo</option>
+      </select>
+      <button class="btn btn-sm shadow-sm" style="background-color: #198754; color: white; border-radius: 0.5rem;"
+        (click)="GuardarOtro(null)" title="Guardar">
+        <i class="bi bi-check-lg fs-7"></i>
+      </button>
+      <button class="btn btn-sm shadow-sm" style="background-color: #dc3545; color: white; border-radius: 0.5rem; "
+        (click)="MostrarAgregarOtro = false; UrlImagenTemporal = ''" title="Cancelar">
+        <i class="bi bi-x-lg fs-7"></i>
+      </button>
+    </div>
+    <!-- Campo editable -->
+    <div contenteditable="true" class="border rounded p-2" style="min-height: 250px;" id="editor-nuevo">
+    </div>
+  </div>
+</div>
+<!-- *******************************-->
+<app-spinner-global [visible]="isLoading"></app-spinner-global>

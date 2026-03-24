@@ -1,0 +1,58 @@
+<div class="fondo-carrito">
+    <div class="contenedor-carrito">
+        <div class="cabecera-carrito" [style.backgroundColor]="colorNavbarEIcono">
+            <button class="boton-volver" (click)="cerrar()">
+                <i class="bi bi-arrow-left"></i>
+            </button>
+            <button class="boton-vaciar" (click)="vaciarCarrito()">
+                Vaciar carrito
+            </button>
+        </div>
+
+        <div class="productos-carrito">
+            <div *ngIf="productosCarrito.length === 0" class="carrito-vacio">
+                <i class="bi bi-cart-x"></i>
+                <p>Tu carrito está vacío</p>
+            </div>
+
+            <div *ngFor="let producto of productosCarrito; let i = index" class="producto-carrito">
+                <div class="imagen-producto">
+                    <img [src]="producto.UrlImagen" [alt]="producto.NombreProducto">
+                </div>
+                <div class="detalles-producto">
+                    <h3>{{ producto.NombreProducto }}</h3>
+                    <p class="precio">{{ producto.Moneda }} {{ producto.Precio }}</p>
+                </div>
+                <div class="controles-cantidad">
+                    <div class="cantidad-producto">
+                        <button class="boton-cantidad" [style.backgroundColor]="colorNavbarEIcono"
+                            (click)="disminuirCantidad(producto)" aria-label="Disminuir cantidad">
+                            -
+                        </button>
+                        <span>{{ producto.cantidad }}</span>
+                        <button class="boton-cantidad" [style.backgroundColor]="colorNavbarEIcono"
+                            (click)="aumentarCantidad(producto)" aria-label="Aumentar cantidad">
+                            +
+                        </button>
+                    </div>
+                </div>
+                <button class="boton-eliminar" (click)="eliminarProducto(i)" aria-label="Eliminar producto">
+                    <i class="bi bi-trash" [style.color]="colorNavbarEIcono"></i>
+                </button>
+            </div>
+        </div>
+
+        <div class="pie-carrito">
+            <div class="total">
+                <span>Total:</span>
+                <span class="monto-total">
+                    {{ productosCarrito.length > 0 ? productosCarrito[0].Moneda : 'Q' }} {{ total }}
+                </span>
+            </div>
+            <button class="boton-pedido" [disabled]="productosCarrito.length === 0" (click)="realizarPedido()">
+                Pedir por WhatsApp
+                <i class="bi bi-whatsapp"></i>
+            </button>
+        </div>
+    </div>
+</div>

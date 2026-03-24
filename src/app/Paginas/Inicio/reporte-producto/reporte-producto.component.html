@@ -1,0 +1,130 @@
+<app-header-reporte></app-header-reporte>
+
+<div class="container mt-3">
+  <div class="row gx-5">
+
+    <!-- PRIMERA COLUMNA: más delgada -->
+    <div class="col-md-4 d-flex flex-column align-items-center" style="min-height: 520px;">
+
+      <div class="d-flex gap-2 w-100 mb-1">
+        <!-- Select de Año -->
+        <select class="form-select w-50"
+          style="background-color: #fca311; color: black; appearance: none; font-weight: normal; font-size: 0.75rem; height: 30px;"
+          [(ngModel)]="AnioTemporal" (change)="DetectarCambiosAnio($event)">
+          <option [value]="ConseguirAnio"
+            style="background-color: white; color: black; font-weight: normal; font-size: 0.85rem;">
+            {{ ConseguirAnio }}
+          </option>
+          <option [value]="ConseguirAnio - 1"
+            style="background-color: white; color: black; font-weight: normal; font-size: 0.85rem;">
+            {{ ConseguirAnio - 1 }}
+          </option>
+        </select>
+
+        <select class="form-select w-50"
+          style="background-color: #fca311; color: black; appearance: none; font-weight: normal; font-size: 0.75rem; height: 30px;"
+          [(ngModel)]="MesTemporal" (change)="DetectarCambiosMes($event)">
+          <option *ngFor="let mes of Meses; let i = index" [value]="i + 1"
+            style="background-color: white; color: black; font-weight: normal; font-size: 0.85rem;">
+            {{ mes }}
+          </option>
+        </select>
+      </div>
+
+      <!-- Círculo solicitudes del mes con borde degradado -->
+      <div class="mb-2 d-flex justify-content-center">
+        <div style="
+      width: 110px;
+      height: 110px;
+      border-radius: 50%;
+      background: linear-gradient(to bottom, black 25%, #fca311 25%);
+      padding: 4px;">
+
+          <div class="d-flex flex-column justify-content-center align-items-center h-100 w-100 rounded-circle bg-white">
+            <div class="text-center">
+              <small style="font-weight: normal; font-size: 0.65rem; color: black;">Solicitudes del mes</small>
+              <div style="font-size: 1.2rem; font-weight: normal; color: #fca311;">{{ TotalSolicitudMes }}</div>
+            </div>
+          </div>
+
+        </div>
+      </div>
+
+      <div class="w-100 mb-2 py-1 text-start"
+        style="background-color: #fca311; color: black; border-radius: 4px; font-weight: normal; font-size: 0.75rem; padding-left: 12px;">
+        Top 3 productos del mes
+      </div>
+
+
+      <!-- Top Productos -->
+      <div class="w-100 d-flex justify-content-around flex-wrap mb-2">
+        <div *ngFor="let producto of TopProductos" class="card shadow-sm position-relative" style="width: 90px;">
+          <!-- Notificación de cantidad -->
+          <div class="position-absolute top-0 end-0 translate-middle badge rounded-circle bg-danger text-white"
+            style="font-size: 0.6rem; z-index: 10; padding: 4px 6px; transform: translate(50%, -50%) !important;">
+            {{ producto.CantidadVendida }}
+          </div>
+          <img [src]="producto.UrlImagen" class="card-img-top" alt="{{ producto.NombreProducto }}"
+            style="height: 60px; object-fit: cover;">
+          <div class="card-body text-center p-1">
+            <div style="font-size: 0.6rem; font-weight: normal;">{{ producto.NombreProducto }}</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Gráfico clasificación mes con título y borde -->
+      <div class="w-100 p-0 mb-0"
+        style="border-radius: 8px; box-shadow: 0 4px 8px rgba(0, 0, 0, 0.3); overflow: hidden;">
+        <div class="text-start"
+          style="background-color: #fca311; color: black; padding: 8px 12px; font-weight: normal; font-size: 0.75rem;">
+          Solicitudes por categoria del mes
+        </div>
+
+        <div class="d-flex justify-content-center" style="height: 220px; padding: 8px;">
+          <canvas baseChart [data]="ConfiguracionGraficoRadar" [type]="GraficoRadar"
+            style="max-width: 100%; max-height: 100%;">
+          </canvas>
+        </div>
+      </div>
+
+    </div>
+
+
+    <!-- SEGUNDA COLUMNA: más ancha con offset para espacio -->
+    <div class="col-md-7 offset-md-1 d-flex flex-column align-items-center" style="min-height: 520px;">
+
+      <!-- Gráfico línea con solo sombreado -->
+      <div class="w-100 mb-4 p-0"
+        style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); background-color: white;">
+        <div class="text-start px-2 py-1 mb-2"
+          style="background-color: #fca311; color: black; border-radius: 4px; font-weight: normal; font-size: 0.85rem;">
+          Solicitudes de productos del mes
+        </div>
+        <div style="height: 224px;">
+          <canvas baseChart [data]="ConfiguracionGraficoLineal" [type]="GraficoLineal" [options]="{
+          responsive: true,
+          scales: {
+            y: { beginAtZero: true }
+          }
+        }" style="max-width: 100%; max-height: 100%;">
+          </canvas>
+        </div>
+      </div>
+
+      <!-- Gráfico del año con solo sombreado -->
+      <div class="w-100 p-0"
+        style="border-radius: 8px; box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15); background-color: white;">
+        <div class="text-start px-2 py-1 mb-2"
+          style="background-color: #fca311; color: black; border-radius: 4px; font-weight: normal; font-size: 0.85rem;">
+          Solicitudes de productos del año
+        </div>
+        <div class="d-flex justify-content-center" style="height: 224px;">
+          <canvas baseChart [data]="ConfiguracionGraficoBarra" [type]="GraficoBarra"
+            style="max-width: 100%; max-height: 100%;">
+          </canvas>
+        </div>
+      </div>
+    </div>
+  </div>
+</div>
+<app-spinner-global [visible]="isLoading"></app-spinner-global>

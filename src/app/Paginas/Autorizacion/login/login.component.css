@@ -1,0 +1,780 @@
+/* Estilos generales para la página de login */
+.pagina-login {
+  height: 100vh;
+  overflow: hidden;
+  position: relative;
+  background-color: #ffffff;
+}
+
+.banner-login {
+  height: 100vh;
+  overflow: hidden;
+}
+
+.contenedor-formulario-login {
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  position: relative;
+  background-color: #fff;
+}
+
+.formulario-login {
+  width: 80%;
+  max-width: 400px;
+  padding: 2rem;
+  z-index: 10;
+}
+
+.contenedor-icono-usuario {
+  width: 60px;
+  height: 60px;
+  border-radius: 50%;
+  background-color: #4b1d1d;
+  color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 0 auto 1rem;
+}
+
+.contenedor-icono-usuario i {
+  font-size: 30px;
+}
+
+.titulo-login {
+  color: #4b1d1d;
+  font-weight: bold;
+  margin-bottom: 1.5rem;
+}
+
+.control-formulario {
+  width: 100%;
+  border-radius: 5px;
+  padding: 0.75rem;
+  border: 1px solid #ced4da;
+}
+
+.control-formulario:focus {
+  border-color: #4b1d1d;
+  box-shadow: 0 0 0 0.25rem rgba(75, 29, 29, 0.25);
+  outline: none;
+}
+
+.boton {
+  cursor: pointer;
+  border: none;
+  border-radius: 5px;
+  padding: 10px;
+}
+
+.boton-oscuro {
+  background-color: #4b1d1d;
+  border-color: #4b1d1d;
+  color: white;
+}
+
+.boton-oscuro:hover {
+  background-color: #3a1717;
+  border-color: #3a1717;
+}
+
+.olvido-contrasena {
+  color: #666;
+  text-decoration: none;
+  font-size: 0.9rem;
+}
+
+.olvido-contrasena:hover {
+  color: #4b1d1d;
+  text-decoration: underline;
+}
+
+.contenedor-trigo-abajo {
+  position: absolute;
+  bottom: 0;
+  left: 0;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.trigo-abajo {
+  width: 40%;
+  height: auto;
+}
+
+.contenedor-trigo-derecha {
+  position: absolute;
+  right: 0;
+  overflow: hidden;
+  z-index: 1;
+}
+
+.trigo-derecha {
+  width: 60%;
+  height: auto;
+  float: right;
+}
+
+.entrada-check {
+  margin-right: 0.5rem;
+}
+
+.entrada-check:checked {
+  background-color: #4b1d1d;
+  border-color: #4b1d1d;
+}
+
+.entrada-check:focus {
+  border-color: #4b1d1d;
+  box-shadow: 0 0 0 0.25rem rgba(75, 29, 29, 0.25);
+}
+
+.etiqueta-check {
+  font-size: 0.9rem;
+}
+
+.etiqueta-formulario {
+  display: block;
+  margin-bottom: 8px;
+  font-weight: 500;
+}
+
+.btn-edit {
+  /* position: absolute; */
+  top: 25px;
+  right: 25px;
+  color: white;
+  border: none;
+  padding: 5px;
+  border-radius: 50%;
+  cursor: pointer;
+  width: 45px;
+  height: 45px;
+  border-radius: 50%;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.trigo-edit-button {
+  position: absolute;
+  z-index: 100;
+  opacity: 0.9;
+  font-size: 12px;
+  padding: 0.25rem 0.5rem;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+/* ===============================================
+   RESPONSIVE BREAKPOINTS
+   =============================================== */
+
+/* MÓVILES PEQUEÑOS */
+@media (max-width: 430px) {
+  .pagina-login {
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pagina-login .row {
+    flex-direction: column !important;
+    height: 100vh;
+    margin: 0;
+  }
+
+  .pagina-login .col-lg-6 {
+    width: 100% !important;
+    flex: none !important;
+  }
+
+  .banner-login {
+    display: block !important;
+    height: auto;
+    max-height: 35vh; /* Reducido para dar más espacio al formulario */
+    min-height: 25vh;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .banner-login img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .contenedor-formulario-login {
+    height: auto;
+    min-height: 65vh; /* Asegurar espacio suficiente */
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 0.5rem;
+    background-color: #ffffff;
+    overflow-y: auto;
+  }
+
+  .formulario-login {
+    width: 75%;
+    max-width: 100%;
+    padding: 0.5rem;
+    margin: 30px;
+    position: relative;
+    z-index: 10;
+    flex-shrink: 0;
+  }
+
+  .contenedor-icono-usuario {
+    width: 40px;
+    height: 40px;
+    margin-bottom: 0.5rem;
+  }
+
+  .contenedor-icono-usuario i {
+    font-size: 18px;
+  }
+
+  .titulo-login {
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+    text-align: center;
+  }
+
+  .control-formulario {
+    padding: 0.625rem 0.5rem;
+    font-size: 16px;
+    margin-bottom: 0.5rem;
+  }
+
+  .boton {
+    padding: 0.625rem;
+    font-size: 0.9rem;
+    width: 100%;
+  }
+
+  .etiqueta-formulario {
+    margin-bottom: 0.25rem;
+    font-size: 0.85rem;
+  }
+
+  .mb-3 {
+    margin-bottom: 0.5rem !important;
+  }
+
+  .mt-5 {
+    margin-top: 0.75rem !important;
+  }
+
+  .contenedor-trigo-derecha {
+    width: 35%;
+    top: 40%;
+    transform: translateY(-50%);
+  }
+
+  .contenedor-trigo-abajo {
+    width: 85%;
+  }
+
+  .olvido-contrasena {
+    font-size: 0.75rem;
+    display: none;
+  }
+
+  /* Ajuste específico para el checkbox */
+  .entrada-check {
+    margin-right: 0.25rem;
+  }
+
+  .etiqueta-check {
+    font-size: 0.8rem;
+  }
+}
+
+/* MÓVILES MEDIANOS (375×667) */
+@media (min-width: 431px) and (max-width: 767px) {
+  .pagina-login {
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pagina-login .row {
+    flex-direction: column !important;
+    height: 100vh;
+    margin: 0;
+  }
+
+  .pagina-login .col-lg-6 {
+    width: 100% !important;
+    flex: none !important;
+  }
+
+  .banner-login {
+    display: block !important;
+    height: auto;
+    max-height: 35vh;
+    min-height: 30vh;
+    overflow: hidden;
+    flex-shrink: 0;
+  }
+
+  .banner-login img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .contenedor-formulario-login {
+    height: auto;
+    min-height: 65vh;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: flex-start;
+    padding: 1rem;
+    background-color: #ffffff;
+    overflow-y: auto;
+  }
+
+  .formulario-login {
+    width: 75%;
+    max-width: 100%;
+    padding: 0.75rem;
+    margin: 0;
+    position: relative;
+    z-index: 10;
+    flex-shrink: 0;
+  }
+
+  .contenedor-icono-usuario {
+    width: 50px;
+    height: 50px;
+    margin-bottom: 0.75rem;
+  }
+
+  .contenedor-icono-usuario i {
+    font-size: 24px;
+  }
+
+  .titulo-login {
+    margin-bottom: 1rem;
+    font-size: 1.25rem;
+    text-align: center;
+  }
+
+  .control-formulario {
+    padding: 0.875rem 0.75rem;
+    font-size: 16px;
+  }
+
+  .boton {
+    padding: 0.875rem;
+    font-size: 1rem;
+    width: 100%;
+  }
+
+  .etiqueta-formulario {
+    margin-bottom: 0.5rem;
+    font-size: 0.95rem;
+  }
+
+  .mb-3 {
+    margin-bottom: 1rem !important;
+  }
+
+  .mt-5 {
+    margin-top: 1.5rem !important;
+  }
+
+  .contenedor-trigo-derecha {
+    width: 25%;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .contenedor-trigo-abajo {
+    width: 70%;
+  }
+
+  .olvido-contrasena {
+    font-size: 0.85rem;
+    display: none;
+  }
+}
+
+/* TABLETS (768px - 1023px) */
+@media (min-width: 768px) and (max-width: 1023px) {
+  .pagina-login {
+    height: 100vh;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .pagina-login .row {
+    flex-direction: column !important;
+    height: 100vh;
+    margin: 0;
+  }
+
+  .pagina-login .col-lg-6 {
+    width: 100% !important;
+    flex: none !important;
+    max-width: 100% !important;
+  }
+
+  .banner-login {
+    display: block !important;
+    height: auto;
+    max-height: 40vh;
+    min-height: 35vh;
+    overflow: hidden;
+    flex-shrink: 0;
+    width: 100%;
+  }
+
+  .banner-login img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .contenedor-formulario-login {
+    height: auto;
+    min-height: 60vh;
+    flex: 1;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 1.5rem;
+    background-color: #ffffff;
+    overflow-y: auto;
+    width: 100%;
+  }
+
+  .formulario-login {
+    width: 70%;
+    max-width: 450px;
+    padding: 1.5rem;
+    margin: 0 auto;
+    position: relative;
+    z-index: 10;
+    flex-shrink: 0;
+  }
+
+  .contenedor-icono-usuario {
+    width: 55px;
+    height: 55px;
+    margin-bottom: 1rem;
+  }
+
+  .contenedor-icono-usuario i {
+    font-size: 26px;
+  }
+
+  .titulo-login {
+    margin-bottom: 1.25rem;
+    font-size: 1.35rem;
+    text-align: center;
+  }
+
+  .control-formulario {
+    padding: 1rem 0.875rem;
+    font-size: 16px;
+  }
+
+  .boton {
+    padding: 1rem;
+    font-size: 1.05rem;
+    width: 100%;
+  }
+
+  .etiqueta-formulario {
+    margin-bottom: 0.6rem;
+    font-size: 1rem;
+  }
+
+  .mb-3 {
+    margin-bottom: 1.25rem !important;
+  }
+
+  .mt-5 {
+    margin-top: 1.75rem !important;
+  }
+
+  .contenedor-trigo-derecha {
+    width: 25%;
+    top: 50%;
+    transform: translateY(-50%);
+  }
+
+  .contenedor-trigo-abajo {
+    width: 45%;
+  }
+
+  .olvido-contrasena {
+    font-size: 0.9rem;
+    display: none;
+    text-align: center;
+  }
+}
+
+/* LAPTOPS Y ESCRITORIOS MEDIANOS (1024px - 1439px) */
+@media (min-width: 1024px) and (max-width: 1439px) {
+  .pagina-login {
+    height: 100vh;
+    overflow: hidden;
+    display: block;
+  }
+
+  .pagina-login .row {
+    flex-direction: row;
+    height: 100vh;
+    margin: 0;
+  }
+
+  .banner-login {
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .banner-login img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .contenedor-formulario-login {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background-color: #fff;
+    padding: 2rem;
+  }
+
+  .formulario-login {
+    width: 75%;
+    max-width: 420px;
+    padding: 2rem;
+    z-index: 10;
+  }
+
+  .contenedor-icono-usuario {
+    width: 60px;
+    height: 60px;
+    margin-bottom: 1rem;
+  }
+
+  .contenedor-icono-usuario i {
+    font-size: 30px;
+  }
+
+  .titulo-login {
+    margin-bottom: 1.5rem;
+    font-size: 1.5rem;
+  }
+
+  .control-formulario {
+    padding: 0.875rem;
+    font-size: 15px;
+  }
+
+  .boton {
+    padding: 0.875rem;
+    font-size: 1rem;
+  }
+
+  .etiqueta-formulario {
+    margin-bottom: 8px;
+    font-size: 0.95rem;
+  }
+
+  .contenedor-trigo-derecha {
+    width: 30%;
+    top: 0;
+    transform: none;
+  }
+
+  .contenedor-trigo-abajo {
+    width: 60%;
+  }
+
+  .olvido-contrasena {
+    font-size: 0.9rem;
+    display: inline;
+  }
+}
+
+/* ESCRITORIOS GRANDES (1440px y superior) */
+@media (min-width: 1440px) {
+  .pagina-login {
+    height: 100vh;
+    overflow: hidden;
+    display: block;
+  }
+
+  .pagina-login .row {
+    flex-direction: row;
+    height: 100vh;
+    margin: 0;
+  }
+
+  .banner-login {
+    height: 100vh;
+    overflow: hidden;
+  }
+
+  .banner-login img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    object-position: center;
+  }
+
+  .contenedor-formulario-login {
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: relative;
+    background-color: #fff;
+    padding: 2.5rem;
+  }
+
+  .formulario-login {
+    width: 70%;
+    max-width: 450px;
+    padding: 2.5rem;
+    z-index: 10;
+  }
+
+  .contenedor-icono-usuario {
+    width: 65px;
+    height: 65px;
+    margin-bottom: 1.25rem;
+  }
+
+  .contenedor-icono-usuario i {
+    font-size: 32px;
+  }
+
+  .titulo-login {
+    margin-bottom: 1.75rem;
+    font-size: 1.6rem;
+  }
+
+  .control-formulario {
+    padding: 1rem;
+    font-size: 16px;
+  }
+
+  .boton {
+    padding: 1rem;
+    font-size: 1.1rem;
+  }
+
+  .etiqueta-formulario {
+    margin-bottom: 10px;
+    font-size: 1rem;
+  }
+
+  .mb-3 {
+    margin-bottom: 1.5rem !important;
+  }
+
+  .mt-5 {
+    margin-top: 2rem !important;
+  }
+
+  .contenedor-trigo-derecha {
+    width: 25%;
+    top: 0;
+    transform: none;
+  }
+
+  .contenedor-trigo-abajo {
+    width: 55%;
+  }
+
+  .olvido-contrasena {
+    font-size: 1rem;
+    display: inline;
+  }
+}
+
+/* Ajustes adicionales para asegurar compatibilidad */
+.row.g-0.h-100 {
+  height: 100vh !important;
+}
+
+/* Estilos para orientación landscape en móviles */
+@media (max-width: 1023px) and (orientation: landscape) and (max-height: 500px) {
+  .banner-login {
+    max-height: 25vh !important;
+    min-height: 20vh !important;
+  }
+
+  .contenedor-formulario-login {
+    padding: 0.25rem !important;
+    min-height: 75vh !important;
+  }
+
+  .formulario-login {
+    padding: 0.5rem !important;
+  }
+
+  .titulo-login {
+    font-size: 1rem !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .mb-3 {
+    margin-bottom: 0.5rem !important;
+  }
+
+  .mt-5 {
+    margin-top: 0.75rem !important;
+  }
+
+  .contenedor-icono-usuario {
+    width: 40px !important;
+    height: 40px !important;
+    margin-bottom: 0.5rem !important;
+  }
+
+  .contenedor-icono-usuario i {
+    font-size: 20px !important;
+  }
+
+  .control-formulario {
+    padding: 0.5rem !important;
+  }
+
+  .boton {
+    padding: 0.5rem !important;
+  }
+}
+
+/* Forzar el layout en columna para dispositivos móviles y tablets */
+@media (max-width: 1023px) {
+  .pagina-login .row {
+    flex-direction: column !important;
+  }
+
+  .pagina-login .col-lg-6:first-child {
+    order: 1 !important;
+  }
+
+  .pagina-login .col-lg-6:last-child {
+    order: 2 !important;
+  }
+}

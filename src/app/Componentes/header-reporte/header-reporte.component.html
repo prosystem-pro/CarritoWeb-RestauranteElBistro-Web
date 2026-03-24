@@ -1,0 +1,57 @@
+<!-- Título centrado -->
+<div class="text-center mb-2">
+  <h2 class="fw-bold fs-3">REPORTES</h2>
+</div>
+
+<!-- Contenedor scrollable en pantallas pequeñas -->
+<div class="d-flex justify-content-center flex-wrap flex-md-nowrap overflow-auto px-2 gap-1">
+
+  <!-- Botón: Productos -->
+  <button *ngIf="Permiso.TienePermiso('ReporteProducto', 'Resumen')" type="button" 
+    class="btn fw-bold shadow flex-shrink-0"
+    (click)="router.navigate(['/reporte-producto'])"
+    [style.background-color]="router.url === '/reporte-producto' ? '#b25d00' : '#fca311'"
+    [style.box-shadow]="router.url === '/reporte-producto' ? 'inset 0 -3px 0 rgba(0, 0, 0, 0.3)' : '0 .5rem 1rem rgba(0, 0, 0, 0.15)'"
+    style="color: white; border: none;
+           border-top-left-radius: 12px; border-top-right-radius: 0;
+           border-bottom-left-radius: 0; border-bottom-right-radius: 0;
+           padding: 0.5rem 1.2rem; font-size: 1rem;">
+    Productos
+  </button>
+
+  <!-- Botón: Visitas -->
+  <button *ngIf="Permiso.TienePermiso('ReporteVista', 'Resumen')" type="button"
+    class="btn fw-bold shadow flex-shrink-0"
+    (click)="router.navigate(['/reporte-vista'])"
+    [style.background-color]="router.url === '/reporte-vista' ? '#b25d00' : '#fca311'"
+    [style.box-shadow]="router.url === '/reporte-vista' ? 'inset 0 -3px 0 rgba(0, 0, 0, 0.3)' : '0 .5rem 1rem rgba(0, 0, 0, 0.15)'"
+    style="color: white; border: none;
+           padding: 0.5rem 1.2rem; font-size: 1rem;">
+    Visitas
+  </button>
+
+  <!-- Botón: Redes Sociales -->
+  <button *ngIf="Permiso.TienePermiso('ReporteRedSocial', 'Resumen')" type="button"
+    class="btn fw-bold shadow flex-shrink-0"
+    (click)="router.navigate(['/reporte-red-social'])"
+    [style.background-color]="router.url === '/reporte-red-social' ? '#b25d00' : '#fca311'"
+    [style.box-shadow]="router.url === '/reporte-red-social' ? 'inset 0 -3px 0 rgba(0, 0, 0, 0.3)' : '0 .5rem 1rem rgba(0, 0, 0, 0.15)'"
+    style="color: white; border: none;
+           padding: 0.5rem 1.2rem; font-size: 1rem;">
+    Redes Sociales
+  </button>
+
+  <!-- Botón: Tiempo en página -->
+  <button *ngIf="Permiso.TienePermiso('ReporteTiempoPagina', 'Resumen')" type="button"
+    class="btn fw-bold shadow flex-shrink-0"
+    (click)="router.navigate(['/reporte-tiempo-pagina'])"
+    [style.background-color]="router.url === '/reporte-tiempo-pagina' ? '#b25d00' : '#fca311'"
+    [style.box-shadow]="router.url === '/reporte-tiempo-pagina' ? 'inset 0 -3px 0 rgba(0, 0, 0, 0.3)' : '0 .5rem 1rem rgba(0, 0, 0, 0.15)'"
+    style="color: white; border: none;
+           border-top-right-radius: 12px; border-top-left-radius: 0;
+           border-bottom-left-radius: 0; border-bottom-right-radius: 0;
+           padding: 0.5rem 1.2rem; font-size: 1rem;">
+    Tiempo en página
+  </button>
+
+</div>

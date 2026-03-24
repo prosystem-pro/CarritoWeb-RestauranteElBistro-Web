@@ -1,0 +1,365 @@
+<footer class="footer py-3" *ngIf="footerData" [style.background-color]="footerData.ColorFooter" style="color: white;">
+    <!-- Botón para entrar/salir del modo edición (esquina inferior derecha del footer) -->
+    <div class="position-relative">
+        <button *ngIf="Permiso.TienePermiso('Footer', 'Editar')" (click)="toggleModoEdicion()"
+            class="btn edit-main-button btn-edicion-general"
+            [ngClass]="{'btn-success': modoEdicion, 'btn-light': !modoEdicion}">
+            <i class="bi" [ngClass]="{'bi-pencil-square': !modoEdicion, 'bi-check-lg': modoEdicion}"
+                [style.color]="modoEdicion ? '#ffffff' : '#000000'"></i>
+        </button>
+    </div>
+
+    <!-- Botón redondo para cambiar el color de fondo del footer -->
+    <button *ngIf="modoEdicion"
+        class="btn btn-light rounded-circle position-absolute d-flex justify-content-center align-items-center"
+        style="bottom: 75px; right: 15px; width: 45px; height: 45px;">
+        <i class="bi bi-palette"></i> <!-- Icono de paleta de Bootstrap Icons -->
+        <input #colorInput type="color" [(ngModel)]="footerData.ColorFooter" title="Color de fondo del footer"
+            (change)="onColorChange(colorInput.value)"
+            style="opacity: 0; position: absolute; left: 0; top: 0; width: 100%; height: 100%; cursor: pointer;">
+    </button>
+
+    <div class="container">
+        <!-- Versión desktop -->
+        <div class="row d-none d-md-flex">
+            <!-- Columna izquierda: Logo y navegación -->
+            <div class="col-md-3">
+                <div class="mb-4 position-relative">
+                    <img [src]="footerData.UrlLogo || 'logo-white.png'" alt="Promesse de Dios" height="60">
+                    <button  *ngIf="modoEdicion && Permiso.TienePermiso('Footer', 'SubirImagen')" class="btn btn-sm btn-light position-absolute edit-button"
+                        style="top: 0; right: 0;">
+                        <label for="logoUpload" style="margin-bottom: 0; cursor: pointer;">
+                            <i class="bi bi-image"></i>
+                        </label>
+                        <input id="logoUpload" type="file" accept="image/*" (change)="actualizarLogo($event)"
+                            style="display: none;">
+                    </button>
+                </div>
+                <ul class="nav flex-column">
+                    <li class="nav-item position-relative">
+                        <a class="nav-link p-1" [style.color]="footerData.ColorTextoInicio"
+                            [attr.href]="modoEdicion ? null : '/nosotros'">
+                            <span *ngIf="!modoEdicion">{{ footerData.TextoInicio }}</span>
+                            <input *ngIf="modoEdicion" type="text" [(ngModel)]="footerData.TextoInicio"
+                                class="editable-input" [style.color]="footerData.ColorTextoInicio">
+                        </a>
+                        <button *ngIf="modoEdicion" class="btn btn-sm btn-light position-absolute edit-button"
+                            style="top: 0; right: 0;">
+                            <input type="color" [(ngModel)]="footerData.ColorTextoInicio"
+                                style="width: 20px; height: 20px;">
+                        </button>
+                    </li>
+                    <li class="nav-item position-relative">
+                        <a class="nav-link p-1" [style.color]="footerData.ColorTextoMenu"
+                            [attr.href]="modoEdicion ? null : '/clasificacion'">
+                            <span *ngIf="!modoEdicion">{{ footerData.TextoMenu }}</span>
+                            <input *ngIf="modoEdicion" type="text" [(ngModel)]="footerData.TextoMenu"
+                                class="editable-input" [style.color]="footerData.ColorTextoMenu">
+                        </a>
+                        <button *ngIf="modoEdicion" class="btn btn-sm btn-light position-absolute edit-button"
+                            style="top: 0; right: 0;">
+                            <input type="color" [(ngModel)]="footerData.ColorTextoMenu"
+                                style="width: 20px; height: 20px;">
+                        </button>
+                    </li>
+                    <li class="nav-item position-relative">
+                        <a class="nav-link p-1" [style.color]="footerData.ColorTextoContacto"
+                            [attr.href]="modoEdicion ? null : '/contacto'">
+                            <span *ngIf="!modoEdicion">{{ footerData.TextoContacto }}</span>
+                            <input *ngIf="modoEdicion" type="text" [(ngModel)]="footerData.TextoContacto"
+                                class="editable-input" [style.color]="footerData.ColorTextoContacto">
+                        </a>
+                        <button *ngIf="modoEdicion" class="btn btn-sm btn-light position-absolute edit-button"
+                            style="top: 0; right: 0;">
+                            <input type="color" [(ngModel)]="footerData.ColorTextoContacto"
+                                style="width: 20px; height: 20px;">
+                        </button>
+                    </li>
+                    <li class="nav-item position-relative">
+                        <a class="nav-link p-1" [style.color]="footerData.ColorTextoOtro"
+                            [attr.href]="modoEdicion ? null : '/otro'">
+                            <span *ngIf="!modoEdicion">{{ footerData.TextoOtro }}</span>
+                            <input *ngIf="modoEdicion" type="text" [(ngModel)]="footerData.TextoOtro"
+                                class="editable-input" [style.color]="footerData.ColorTextoOtro">
+                        </a>
+                        <button *ngIf="modoEdicion" class="btn btn-sm btn-light position-absolute edit-button"
+                            style="top: 0; right: 0;">
+                            <input type="color" [(ngModel)]="footerData.ColorTextoOtro"
+                                style="width: 20px; height: 20px;">
+                        </button>
+                    </li>
+                </ul>
+            </div>
+
+            <!-- Columna central: Contacto y redes sociales -->
+            <div class="col-md-4">
+                <div class="text-center">
+                    <div class="position-relative">
+                        <h5 class="mb-3" [style.color]="footerData.ColorTextoContacto">
+                            <span *ngIf="!modoEdicion">{{ footerData.TextoContacto }}</span>
+                            <input *ngIf="modoEdicion" type="text" [(ngModel)]="footerData.TextoContacto"
+                                class="editable-input" [style.color]="footerData.ColorTextoContacto">
+                        </h5>
+                        <button *ngIf="modoEdicion" class="btn btn-sm btn-light position-absolute edit-button"
+                            style="top: 0; right: 0;">
+                            <input type="color" [(ngModel)]="footerData.ColorTextoContacto"
+                                style="width: 20px; height: 20px;">
+                        </button>
+                    </div>
+
+                    <div class="position-relative mb-5">
+                        <p [style.color]="footerData.ColorTextoTelefonoOficina">
+                            <span *ngIf="!modoEdicion">{{ footerData.TextoTelefonoOficina }}</span>
+                            <input *ngIf="modoEdicion" type="text" [(ngModel)]="footerData.TextoTelefonoOficina"
+                                class="editable-input" [style.color]="footerData.ColorTextoTelefonoOficina">
+                        </p>
+                        <button *ngIf="modoEdicion" class="btn btn-sm btn-light position-absolute edit-button"
+                            style="top: 0; right: 0;">
+                            <input type="color" [(ngModel)]="footerData.ColorTextoTelefonoOficina"
+                                style="width: 20px; height: 20px;">
+                        </button>
+                    </div>
+                </div>
+
+                <div class="text-center">
+                    <div class="position-relative">
+                        <h5 class="mb-3" [style.color]="footerData.ColorTextoRedesSociales">
+                            <span *ngIf="!modoEdicion">{{ footerData.TextoRedesSociales }}</span>
+                            <input *ngIf="modoEdicion" type="text" [(ngModel)]="footerData.TextoRedesSociales"
+                                class="editable-input text-center" [style.color]="footerData.ColorTextoRedesSociales">
+                        </h5>
+                        <button *ngIf="modoEdicion" class="btn btn-sm btn-light position-absolute edit-button"
+                            style="top: 0; right: 0;">
+                            <input type="color" [(ngModel)]="footerData.ColorTextoRedesSociales"
+                                style="width: 20px; height: 20px;">
+                        </button>
+                    </div>
+
+                    <div class="d-flex justify-content-center position-relative gap-1">
+                        <a *ngFor="let red of RedSocial" [href]="red.Link" target="_blank" rel="noopener noreferrer"
+                            class="position-relative d-inline-block">
+                            <img [src]="red.Imagenes[0]?.UrlImagen || ''" [alt]="red.NombreRedSocial" width="35"
+                                height="35" (click)="ReportarRedSocial(red.CodigoRedSocial)" />
+                            <!-- Botón cámara -->
+                            <label *ngIf="Permiso.TienePermiso('RedSocialImagen', 'SubirImagen')"
+                                class="position-absolute bottom-0 end-0 bg-white rounded-circle d-flex align-items-center justify-content-center"
+                                style="width: 18px; height: 18px; cursor: pointer; box-shadow: 0px 2px 5px rgba(0,0,0,0.3);">
+                                <i class="bi bi-camera-fill text-black fs-6"></i>
+                                <input type="file" accept="image/*"
+                                    (change)="actualizarImagenRedSocial($event, red.CodigoRedSocial)" hidden>
+                            </label>
+                        </a>
+                    </div>
+                </div>
+            </div>
+
+            <!-- Columna derecha: Formulario de suscripción -->
+            <div class="col-md-5 mt-5">
+                <div class="position-relative">
+                    <h5 class="mb-3" [style.color]="footerData.ColorTextoSuscripcion">
+                        <span *ngIf="!modoEdicion">{{ footerData.TextoSuscripcion }}</span>
+                        <input *ngIf="modoEdicion" type="text" [(ngModel)]="footerData.TextoSuscripcion"
+                            class="editable-input" [style.color]="footerData.ColorTextoSuscripcion">
+                    </h5>
+                    <button *ngIf="modoEdicion" class="btn btn-sm btn-light position-absolute edit-button"
+                        style="top: 0; right: 0;">
+                        <input type="color" [(ngModel)]="footerData.ColorTextoSuscripcion"
+                            style="width: 20px; height: 20px;">
+                    </button>
+                </div>
+
+                <div class="input-group mb-3">
+                    <input type="email" class="form-control" placeholder="Correo electrónico">
+                    <div class="position-relative">
+                        <button class="btn px-4 btn-suscripcion" type="button"
+                            [style.background-color]="footerData.ColorBotonSuscribirte"
+                            [style.color]="footerData.ColorTextoBotonSuscribirte">
+                            <span *ngIf="!modoEdicion">{{ footerData.TextoBotonSuscribirte }}</span>
+                            <span *ngIf="modoEdicion">
+                                <input type="text" [(ngModel)]="footerData.TextoBotonSuscribirte"
+                                    class="editable-input text-center" style="max-width: 80px;"
+                                    [style.color]="footerData.ColorTextoBotonSuscribirte">
+                            </span>
+                        </button>
+                        <div *ngIf="modoEdicion" class="btn-group position-absolute" style="top: 44px; right: 0;">
+                            <button class="btn btn-sm btn-light" title="Color de texto">
+                                <input type="color" [(ngModel)]="footerData.ColorTextoBotonSuscribirte"
+                                    style="width: 20px; height: 20px;">
+                            </button>
+                            <button class="btn btn-sm btn-light" title="Color de fondo">
+                                <input type="color" [(ngModel)]="footerData.ColorBotonSuscribirte"
+                                    style="width: 20px; height: 20px;">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Versión móvil -->
+        <div class="d-md-none">
+            <div class="row">
+                <!-- Primera columna: Logo y navegación -->
+                <div class="col-3">
+                    <!-- Logo -->
+                    <div class="mb-4 position-relative">
+                        <img [src]="footerData.UrlLogo || 'logo-white.png'" alt="Promesse de Dios" height="60">
+                        <button *ngIf="modoEdicion" class="btn btn-sm btn-light position-absolute edit-button"
+                            style="top: 0; right: 0;">
+                            <label for="logoUploadMobile" style="margin-bottom: 0; cursor: pointer;">
+                                <i class="bi bi-image"></i>
+                            </label>
+                            <input id="logoUploadMobile" type="file" accept="image/*" (change)="actualizarLogo($event)"
+                                style="display: none;">
+                        </button>
+                    </div>
+
+                    <!-- Menú simplificado -->
+                    <div class="mb-4">
+                        <ul class="nav flex-column">
+                            <li class="nav-item position-relative">
+                                <a class="nav-link p-1" [style.color]="footerData.ColorTextoInicio" href="/nosotros">
+                                    <span *ngIf="!modoEdicion">{{ footerData.TextoInicio }}</span>
+                                    <input *ngIf="modoEdicion" type="text" [(ngModel)]="footerData.TextoInicio"
+                                        class="editable-input" [style.color]="footerData.ColorTextoInicio">
+                                </a>
+                                <button *ngIf="modoEdicion" class="btn btn-sm btn-light position-absolute edit-button"
+                                    style="top: 0; right: 0;">
+                                    <input type="color" [(ngModel)]="footerData.ColorTextoInicio"
+                                        style="width: 20px; height: 20px;">
+                                </button>
+                            </li>
+                            <li class="nav-item position-relative">
+                                <a class="nav-link p-1" [style.color]="footerData.ColorTextoMenu" href="/clasificacion">
+                                    <span *ngIf="!modoEdicion">{{ footerData.TextoMenu }}</span>
+                                    <input *ngIf="modoEdicion" type="text" [(ngModel)]="footerData.TextoMenu"
+                                        class="editable-input" [style.color]="footerData.ColorTextoMenu">
+                                </a>
+                                <button *ngIf="modoEdicion" class="btn btn-sm btn-light position-absolute edit-button"
+                                    style="top: 0; right: 0;">
+                                    <input type="color" [(ngModel)]="footerData.ColorTextoMenu"
+                                        style="width: 20px; height: 20px;">
+                                </button>
+                            </li>
+                            <li class="nav-item position-relative">
+                                <a class="nav-link p-1" [style.color]="footerData.ColorTextoContacto" href="/contacto">
+                                    <span *ngIf="!modoEdicion">{{ footerData.TextoContacto }}</span>
+                                    <input *ngIf="modoEdicion" type="text" [(ngModel)]="footerData.TextoContacto"
+                                        class="editable-input" [style.color]="footerData.ColorTextoContacto">
+                                </a>
+                                <button *ngIf="modoEdicion" class="btn btn-sm btn-light position-absolute edit-button"
+                                    style="top: 0; right: 0;">
+                                    <input type="color" [(ngModel)]="footerData.ColorTextoContacto"
+                                        style="width: 20px; height: 20px;">
+                                </button>
+                            </li>
+                            <li class="nav-item position-relative">
+                                <a class="nav-link p-1" [style.color]="footerData.ColorTextoOtro" href="/otro">
+                                    <span *ngIf="!modoEdicion">{{ footerData.TextoOtro }}</span>
+                                    <input *ngIf="modoEdicion" type="text" [(ngModel)]="footerData.TextoOtro"
+                                        class="editable-input" [style.color]="footerData.ColorTextoOtro">
+                                </a>
+                                <button *ngIf="modoEdicion" class="btn btn-sm btn-light position-absolute edit-button"
+                                    style="top: 0; right: 0;">
+                                    <input type="color" [(ngModel)]="footerData.ColorTextoOtro"
+                                        style="width: 20px; height: 20px;">
+                                </button>
+                            </li>
+                        </ul>
+                    </div>
+                </div>
+
+                <!-- Segunda columna: Contacto y redes sociales -->
+                <div class="col-9 text-center mt-5">
+                    <!-- Contacto -->
+                    <div class="mb-4">
+                        <div class="position-relative">
+                            <h5 class="mb-2" [style.color]="footerData.ColorTextoContacto">
+                                <span *ngIf="!modoEdicion">{{ footerData.TextoContacto }}</span>
+                                <input *ngIf="modoEdicion" type="text" [(ngModel)]="footerData.TextoContacto"
+                                    class="editable-input text-center" [style.color]="footerData.ColorTextoContacto">
+                            </h5>
+                            <button *ngIf="modoEdicion" class="btn btn-sm btn-light position-absolute edit-button"
+                                style="top: 0; right: 0;">
+                                <input type="color" [(ngModel)]="footerData.ColorTextoContacto"
+                                    style="width: 20px; height: 20px;">
+                            </button>
+                        </div>
+
+                        <div class="position-relative">
+                            <p [style.color]="footerData.ColorTextoTelefonoOficina">
+                                <span *ngIf="!modoEdicion">{{ footerData.TextoTelefonoOficina }}</span>
+                                <input *ngIf="modoEdicion" type="text" [(ngModel)]="footerData.TextoTelefonoOficina"
+                                    class="editable-input" [style.color]="footerData.ColorTextoTelefonoOficina">
+                            </p>
+                            <button *ngIf="modoEdicion" class="btn btn-sm btn-light position-absolute edit-button"
+                                style="top: 0; right: 0;">
+                                <input type="color" [(ngModel)]="footerData.ColorTextoTelefonoOficina"
+                                    style="width: 20px; height: 20px;">
+                            </button>
+                        </div>
+                    </div>
+
+                    <!-- Redes sociales -->
+                    <div class="mb-4">
+                        <div class="d-flex justify-content-center position-relative gap-1">
+                            <a *ngFor="let red of RedSocial" [href]="red.Link" target="_blank" rel="noopener noreferrer"
+                                class="position-relative d-inline-block">
+                                <img [src]="red.Imagenes[0]?.UrlImagen || ''" [alt]="red.NombreRedSocial" width="25"
+                                    height="25" />
+                                <!-- Botón cámara -->
+                                <label *ngIf="Permiso.TienePermiso('RedSocialImagen', 'SubirImagen')"
+                                    class="position-absolute bottom-0 end-0 bg-white rounded-circle d-flex align-items-center justify-content-center"
+                                    style="width: 18px; height: 18px; cursor: pointer; box-shadow: 0px 2px 5px rgba(0,0,0,0.3);">
+                                    <i class="bi bi-camera-fill text-black fs-6"></i>
+                                    <input type="file" accept="image/*"
+                                        (change)="actualizarImagenRedSocial($event, red.CodigoRedSocial)" hidden>
+                                </label>
+                            </a>
+                        </div>
+
+                        <div class="mt-2 position-relative" [style.color]="footerData.ColorTextoRedesSociales">
+                            <span *ngIf="!modoEdicion">{{ footerData.TextoRedesSociales }}</span>
+                            <input *ngIf="modoEdicion" type="text" [(ngModel)]="footerData.TextoRedesSociales"
+                                class="editable-input text-center" [style.color]="footerData.ColorTextoRedesSociales">
+                            <button *ngIf="modoEdicion" class="btn btn-sm btn-light position-absolute edit-button"
+                                style="top: 0; right: 0;">
+                                <input type="color" [(ngModel)]="footerData.ColorTextoRedesSociales"
+                                    style="width: 20px; height: 20px;">
+                            </button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="w-100 mt-2 copyright-section d-none d-md-block">
+        <div class="border-top pt-3" style="border-color: rgba(255,255,255,0.2)!important;">
+            <p class="small mb-0 text-center position-relative" [style.color]="footerData.ColorDerechosDeAutor">
+                <span *ngIf="!modoEdicion">{{ footerData.DerechoDeAutor }}</span>
+                <input *ngIf="modoEdicion" type="text" [(ngModel)]="footerData.DerechoDeAutor"
+                    class="editable-input text-center" style="width: 100%;"
+                    [style.color]="footerData.ColorDerechosDeAutor">
+                <button *ngIf="modoEdicion" class="btn btn-sm btn-light position-absolute edit-button"
+                    style="top: 0; right: 0;">
+                    <input type="color" [(ngModel)]="footerData.ColorDerechosDeAutor"
+                        style="width: 20px; height: 20px;">
+                </button>
+            </p>
+        </div>
+    </div>
+</footer>
+
+<!-- Mostrar spinner mientras se cargan los datos -->
+<div *ngIf="isLoading" class="text-center p-4">
+    <div class="spinner-border" role="status">
+        <span class="visually-hidden">Cargando...</span>
+    </div>
+</div>
+
+<!-- Mostrar mensaje de error si falla la carga -->
+<div *ngIf="error" class="alert alert-danger m-3">
+    Error al cargar los datos del footer. Por favor, intenta nuevamente más tarde.
+</div>
+
+<app-spinner-global [visible]="isLoading"></app-spinner-global>

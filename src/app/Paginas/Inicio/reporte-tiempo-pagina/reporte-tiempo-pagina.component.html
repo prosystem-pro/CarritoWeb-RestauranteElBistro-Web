@@ -1,0 +1,125 @@
+<app-header-reporte></app-header-reporte>
+
+<div class="container mt-3">
+  <div class="d-flex gap-2 w-100 mb-4 Selector">
+    <!-- Select de Año -->
+    <select class="form-select w-50"
+      style="background-color: #fca311; color: black; appearance: none; font-weight: normal; font-size: 0.75rem; height: 30px;"
+      [(ngModel)]="AnioTemporal" (change)="DetectarCambiosAnio($event)">
+      <option [value]="ConseguirAnio"
+        style="background-color: white; color: black; font-weight: normal; font-size: 0.85rem;">
+        {{ ConseguirAnio }}
+      </option>
+      <option [value]="ConseguirAnio - 1"
+        style="background-color: white; color: black; font-weight: normal; font-size: 0.85rem;">
+        {{ ConseguirAnio - 1 }}
+      </option>
+    </select>
+
+    <!-- Select de Mes -->
+    <select class="form-select w-50"
+      style="background-color: #fca311; color: black; appearance: none; font-weight: normal; font-size: 0.75rem; height: 30px;"
+      [(ngModel)]="MesTemporal" (change)="DetectarCambiosMes($event)">
+      <option *ngFor="let mes of Meses; let i = index" [value]="i + 1"
+        style="background-color: white; color: black; font-weight: normal; font-size: 0.85rem;">
+        {{ mes }}
+      </option>
+    </select>
+  </div>
+
+  <div style="
+    position: relative;
+    border-top: 20px solid #fca311; /* franja naranja gruesa arriba */
+    border-left: none;
+    border-right: none;
+    border-bottom: none;
+    border-radius: 0 0 15px 15px; /* redondear solo esquinas abajo */
+    min-height: 150px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    box-sizing: border-box;
+    box-shadow: 
+      0 20px 20px -10px rgba(0, 0, 0, 0.7),  /* sombra abajo */
+      8px 0 10px -5px rgba(0, 0, 0, 0.4),     /* sombra derecha */
+      -8px 0 10px -5px rgba(0, 0, 0, 0.4);    /* sombra izquierda */
+  " class="position-relative ContornoHorario py-3 mb-3">
+
+    <!-- Fondo tipo botón para el título -->
+    <div class="Titulo" style="
+      position: absolute;
+
+      left: 50%;
+      transform: translateX(-50%);
+      background-color: #fca311;
+      padding: 12px 30px;
+      border-radius: 20px;
+      font-weight: 700;
+      color: white;
+      font-size: 1.4rem;
+      user-select: none;
+      box-shadow: 0 3px 8px rgba(0,0,0,0.3);
+      white-space: nowrap;
+      text-align: center;
+      z-index: 10;
+    ">
+      TIEMPO EN PÁGINA ACUMULADA DEL MES
+    </div>
+
+    <div class="row gx-4 gy-4 justify-content-center align-items-center w-100 h-100">
+      <!-- Círculos -->
+      <ng-container *ngFor="let item of tiemposCirculos">
+        <div
+          class="col-12 col-sm-6 col-md-4 col-lg-3 d-flex flex-column align-items-center justify-content-center text-center">
+          <svg class="DiseñoHorario" viewBox="0 0 36 36" style="display: block; margin: 0 auto;">
+            <!-- Definición de degradados -->
+            <defs>
+              <linearGradient id="gradienteNegroBlanco" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:black; stop-opacity:1" />
+                <stop offset="100%" style="stop-color:rgb(161, 157, 157); stop-opacity:1" />
+              </linearGradient>
+              <linearGradient id="gradienteBlancoNaranja" x1="0%" y1="0%" x2="100%" y2="0%">
+                <stop offset="0%" style="stop-color:rgb(255, 160, 160); stop-opacity:1" />
+                <stop offset="100%" style="stop-color:#a83c01; stop-opacity:1" />
+              </linearGradient>
+            </defs>
+
+            <!-- Círculo de contorno delgado con degradado y sombreado circular -->
+            <circle cx="18" cy="18" r="16" fill="none" stroke="url(#gradienteBlancoNaranja)" stroke-width="1.1" />
+
+            <!-- Fondo blanco -->
+            <circle cx="18" cy="18" r="14" fill="white" style="filter: drop-shadow(0 0 0.3px rgba(0,0,0,0.4));" />
+
+            <!-- Círculo de progreso con degradado -->
+            <circle cx="18" cy="18" r="10" fill="none" stroke="url(#gradienteNegroBlanco)" stroke-width="5"
+              [attr.stroke-dasharray]="CalcularDashArray(item.porcentaje)" stroke-linecap="butt"
+              style="transform: rotate(-90deg); transform-origin: 50% 50%; transition: stroke-dasharray 1s ease-out;" />
+
+            <!-- Texto centrado -->
+            <text x="18" y="20.35" fill="#800000" font-size="8" font-weight="900" text-anchor="middle"
+              alignment-baseline="middle">
+              {{ item.valor }}
+            </text>
+          </svg>
+
+          <!-- Etiqueta estilo botón degradado corinto -->
+          <div style="
+            display: inline-block;
+            margin-top: 18px;
+            color: white;
+            font-size: 1.4rem;
+            font-weight: 700;
+            padding: 10px 20px;
+            border-radius: 12px;
+            background: linear-gradient(45deg, #890c0c, #000000);
+            box-shadow: 0 0 7px rgba(0,0,0,0.6);
+          ">
+            {{ item.etiqueta }}
+          </div>
+        </div>
+      </ng-container>
+    </div>
+  </div>
+</div>
+<app-spinner-global [visible]="isLoading"></app-spinner-global>

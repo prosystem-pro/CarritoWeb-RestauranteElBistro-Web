@@ -1,0 +1,24 @@
+<section>
+    <div class="icon-container">
+        <!-- Botón con icono de Bootstrap para abrir el color picker -->
+        <!-- <button class="btn btn-light" (click)="openColorPicker()" title="Editar color">
+            <i class="bi bi-palette"></i>
+        </button> -->
+
+        <!-- Input de color oculto -->
+        <input type="color" #colorPicker id="colorPicker" style="display: none;" (input)="changeColor($event)">
+
+        <!-- SVG con el gradiente dinámico -->
+        <svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1440 220">
+            <defs>
+                <linearGradient id="gradiente" x1="0" y1="0" x2="0" y2="1">
+                    <stop offset="0%" [attr.stop-color]="primaryColor" />
+                    <stop offset="100%" [attr.stop-color]="secondaryColor" />
+                </linearGradient>
+            </defs>
+            <path fill="url(#gradiente)" fill-opacity="1.1"
+                d="M0,32L30,74.7C60,117,120,203,180,208C240,213,300,139,360,106.7C420,75,480,85,540,112C600,139,660,181,720,186.7C780,192,840,160,900,122.7C960,85,1020,43,1080,64C1140,85,1200,171,1260,197.3C1320,224,1380,192,1410,176L1440,160L1440,0L1410,0C1380,0,1320,0,1260,0C1200,0,1140,0,1080,0C1020,0,960,0,900,0C840,0,780,0,720,0C660,0,600,0,540,0C480,0,420,0,360,0C300,0,240,0,180,0C120,0,60,0,30,0L0,0Z">
+            </path>
+        </svg>
+    </div>
+</section>

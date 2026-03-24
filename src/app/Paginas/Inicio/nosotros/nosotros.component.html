@@ -1,0 +1,234 @@
+<div class="container-fluid p-0" *ngIf="portadaData">
+    <!-- Elementos decorativos de trigo con posiciones mejoradas -->
+    <div class="trigo-izquierda d-none d-md-block">
+        <img [src]="portadaData.UrlImagenPortadaIzquierdo || ''" alt="Izquierda" class="img-fluid">
+        <button *ngIf="modoEdicion && Permiso.TienePermiso('EmpresaPortada', 'SubirImagen')" class="btn btn-sm btn-light trigo-edit-button" style="top: 0; left: 0;"
+            title="Cambiar imagen">
+            <label for="trigoIzquierdoUpload" style="margin-bottom: 0; cursor: pointer;">
+                <i class="bi bi-image"></i>
+            </label>
+            <input id="trigoIzquierdoUpload" type="file" accept="image/*"
+                (change)="actualizarImagenPortadaIzquierda($event)" style="display: none;">
+        </button>
+    </div>
+
+    <div class="trigo-derecho d-none d-md-block">
+        <img [src]="portadaData.UrlImagenPortadaDerecho || ''" alt="Derecho" class="img-fluid">
+        <button *ngIf="modoEdicion && Permiso.TienePermiso('EmpresaPortada', 'SubirImagen')" class="btn btn-sm btn-light trigo-edit-button" style="top: 0; right: 0;"
+            title="Cambiar imagen">
+            <label for="trigoDerechoUpload" style="margin-bottom: 0; cursor: pointer;">
+                <i class="bi bi-image"></i>
+            </label>
+            <input id="trigoDerechoUpload" type="file" accept="image/*"
+                (change)="actualizarImagenPortadaDerecha($event)" style="display: none;">
+        </button>
+    </div>
+
+    <!-- Versión móvil de los elementos decorativos (opcional, para mejor control) -->
+    <div class="trigo-izquierda d-md-none">
+        <img [src]="portadaData.UrlImagenPortadaIzquierdo || 'trigoIzquierda.png'" alt="Trigo Izquierda"
+            class="img-fluid">
+        <button *ngIf="modoEdicion && Permiso.TienePermiso('EmpresaPortada', 'SubirImagen')" class="btn btn-sm btn-light trigo-edit-button" style="top: 0; left: 0;">
+            <label for="trigoIzquierdoUploadMobile" style="margin-bottom: 0; cursor: pointer;">
+                <i class="bi bi-image"></i>
+            </label>
+            <input id="trigoIzquierdoUploadMobile" type="file" accept="image/*"
+                (change)="actualizarImagenPortadaIzquierda($event)" style="display: none;">
+        </button>
+    </div>
+
+    <div class="trigo-derecho d-md-none">
+        <img [src]="portadaData.UrlImagenPortadaDerecho || 'trigoDerecho.jpg'" alt="Trigo Derecho" class="img-fluid">
+        <button *ngIf="modoEdicion && Permiso.TienePermiso('EmpresaPortada', 'SubirImagen')" class="btn btn-sm btn-light trigo-edit-button" style="top: 0; right: 0;">
+            <label for="trigoDerechoUploadMobile" style="margin-bottom: 0; cursor: pointer;">
+                <i class="bi bi-image"></i>
+            </label>
+            <input id="trigoDerechoUploadMobile" type="file" accept="image/*"
+                (change)="actualizarImagenPortadaDerecha($event)" style="display: none;">
+        </button>
+    </div>
+
+    <div class="hero-section position-relative">
+        <img [src]="portadaData.UrlImagenPortada" class="img-fluid w-100" alt="Panadería">
+        <button *ngIf="modoEdicion && Permiso.TienePermiso('EmpresaPortada', 'SubirImagen')" class="btn btn-light position-absolute edit-button" style="top: 10px; right: 10px;">
+            <label for="portadaUpload" style="margin-bottom: 0; cursor: pointer;">
+                <i class="bi bi-image"></i>
+            </label>
+            <input id="portadaUpload" type="file" accept="image/*" (change)="actualizarImagenPortada($event)"
+                style="display: none;">
+        </button>
+    </div>
+
+    <!-- Botón para entrar/salir del modo edición -->
+    <div class="container my-3 text-end">
+        <button *ngIf="Permiso.TienePermiso('EmpresaPortada', 'Editar')" (click)="toggleModoEdicion()"
+            class="btn edit-main-button btn-edicion-general"
+            [ngClass]="{'btn-success': modoEdicion, 'btn-light': !modoEdicion}">
+            <i class="bi" [ngClass]="{'bi-pencil-square': !modoEdicion, 'bi-check-lg': modoEdicion}"
+                [style.color]="modoEdicion ? '#ffffff' : '#000000'"></i>
+        </button>
+    </div>
+
+    <div>
+        <div class="container py-5">
+            <h2 class="text-center fw-bold mb-4 position-relative" [style.color]="portadaData.ColorTituloQuienesSomos">
+                <span *ngIf="!modoEdicion">{{ portadaData.TitutloQuienesSomos }}</span>
+                <input *ngIf="modoEdicion" type="text" [(ngModel)]="portadaData.TitutloQuienesSomos"
+                    class="editable-input text-center" [style.color]="portadaData.ColorTituloQuienesSomos">
+                <button *ngIf="modoEdicion" class="btn btn-sm btn-light position-absolute edit-button"
+                    style="top: 0; right: 0;" title="Cambiar color texto">
+                    <input type="color" [(ngModel)]="portadaData.ColorTituloQuienesSomos"
+                        style="width: 20px; height: 20px;">
+                </button>
+            </h2>
+            <p class="text-center mx-auto position-relative" style="max-width: 800px;"
+                [style.color]="portadaData.ColorDescripcionQuienesSomos">
+                <span *ngIf="!modoEdicion">{{ portadaData.DescripcionQuienesSomos }}</span>
+                <textarea *ngIf="modoEdicion" [(ngModel)]="portadaData.DescripcionQuienesSomos"
+                    class="editable-input text-center w-100" style="min-height: 80px;"
+                    [style.color]="portadaData.ColorDescripcionQuienesSomos"></textarea>
+                <button *ngIf="modoEdicion" class="btn btn-sm btn-light position-absolute edit-button"
+                    style="top: 0; right: 0;" title="Cambiar color texto">
+                    <input type="color" [(ngModel)]="portadaData.ColorDescripcionQuienesSomos"
+                        style="width: 20px; height: 20px;">
+                </button>
+            </p>
+        </div>
+
+        <!-- Sección Misión -->
+        <div class="container py-3">
+            <h2 class="text-center fw-bold mb-4 position-relative" [style.color]="portadaData.ColorTituloMision">
+                <span *ngIf="!modoEdicion">{{ portadaData.TituloMision }}</span>
+                <input *ngIf="modoEdicion" type="text" [(ngModel)]="portadaData.TituloMision"
+                    class="editable-input text-center" [style.color]="portadaData.ColorTituloMision">
+                <button *ngIf="modoEdicion" class="btn btn-sm btn-light position-absolute edit-button"
+                    style="top: 0; right: 0;" title="Cambiar color texto">
+                    <input type="color" [(ngModel)]="portadaData.ColorTituloMision" style="width: 20px; height: 20px;">
+                </button>
+            </h2>
+            <div class="row justify-content-center rounded-4">
+                <div class="col-md-8">
+                    <div class="mission-card position-relative">
+                        <p [style.color]="portadaData.ColorDescripcionMision">
+                            <span *ngIf="!modoEdicion">{{ portadaData.DescripcionMision }}</span>
+                            <textarea *ngIf="modoEdicion" [(ngModel)]="portadaData.DescripcionMision"
+                                class="editable-input w-100" style="min-height: 80px;"
+                                [style.color]="portadaData.ColorDescripcionMision"></textarea>
+                        </p>
+                        <div class="mission-logo" [style.backgroundColor]="colorFooter">
+                            <img [src]="portadaData.UrlImagenMision" alt="Logo">
+                        </div>
+                        <button *ngIf="modoEdicion" class="btn btn-sm btn-light position-absolute edit-button"
+                            style="top: 0; right: 75px;" title="Cambiar color texto">
+                            <input type="color" [(ngModel)]="portadaData.ColorDescripcionMision"
+                                style="width: 20px; height: 20px;">
+                        </button>
+                        <button *ngIf="modoEdicion && Permiso.TienePermiso('EmpresaPortada', 'SubirImagen')" class="btn btn-sm btn-light" style="top: 0; left: 0;"
+                            title="Cambiar imagen">
+                            <label for="imagenMision" style="margin-bottom: 0; cursor: pointer;">
+                                <i class="bi bi-image"></i>
+                            </label>
+                            <input id="imagenMision" type="file" accept="image/*"
+                                (change)="actualizarImagenMision($event)" style="display: none;">
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Sección Visión -->
+        <div class="container py-3">
+            <h2 class="text-center fw-bold mb-4 position-relative" [style.color]="portadaData.ColorTituloVision">
+                <span *ngIf="!modoEdicion">{{ portadaData.TituloVision }}</span>
+                <input *ngIf="modoEdicion" type="text" [(ngModel)]="portadaData.TituloVision"
+                    class="editable-input text-center" [style.color]="portadaData.ColorTituloVision">
+                <button *ngIf="modoEdicion" class="btn btn-sm btn-light position-absolute edit-button"
+                    style="top: 0; right: 0;" title="Cambiar color texto">
+                    <input type="color" [(ngModel)]="portadaData.ColorTituloVision" style="width: 20px; height: 20px;">
+                </button>
+            </h2>
+            <div class="row justify-content-center">
+                <div class="col-md-8">
+                    <div class="vision-card position-relative">
+                        <div class="vision-logo" [style.backgroundColor]="colorFooter">
+                            <img [src]="portadaData.UrlImagenVision" alt="Logo">
+                        </div>
+                        <button *ngIf="modoEdicion && Permiso.TienePermiso('EmpresaPortada', 'SubirImagen')" class="btn btn-sm btn-light" style="top: 0; left: 0;"
+                            title="Cambiar imagen">
+                            <label for="imagenVision" style="margin-bottom: 0; cursor: pointer;">
+                                <i class="bi bi-image"></i>
+                            </label>
+                            <input id="imagenVision" type="file" accept="image/*"
+                                (change)="actualizarImagenVision($event)" style="display: none;">
+                        </button>
+                        <p [style.color]="portadaData.ColordescripcionVision">
+                            <span *ngIf="!modoEdicion">{{ portadaData.DescripcionVision }}</span>
+                            <textarea *ngIf="modoEdicion" [(ngModel)]="portadaData.DescripcionVision"
+                                class="editable-input w-100" style="min-height: 80px;"
+                                [style.color]="portadaData.ColordescripcionVision"></textarea>
+                        </p>
+                        <button *ngIf="modoEdicion" class="btn btn-sm btn-light position-absolute edit-button"
+                            style="top: 0; left: 75px;" title="Cambiar color texto">
+                            <input type="color" [(ngModel)]="portadaData.ColordescripcionVision"
+                                style="width: 20px; height: 20px;">
+                        </button>
+                    </div>
+                </div>
+            </div>
+        </div>
+
+        <div class="container py-3">
+            <app-carrusel *ngIf="datosListos" [items]="detallesCarrusel" [title]="titulo"
+                [codigoCarrusel]="codigoCarrusel" titleClass="cursive-font text-dark" [autoplay]="true"
+                [autoplayInterval]="5000">
+            </app-carrusel>
+        </div>
+        <div class="container-fluid p-0 position-relative mb-2">
+            <div class="video-container" style="position: relative;">
+                <video #videoPlayer class="reproductor d-block mx-auto" [src]="sanitizedVideoUrl" loop muted playsinline
+                    autoplay preload="auto" controls [hidden]="!sanitizedVideoUrl"
+                    style="object-fit: cover; width: 100%; height: auto;">
+                </video>
+
+
+                <div *ngIf="mostrarOverlay" (click)="activarSonido()" style="
+      position: absolute;
+      top: 0; left: 0;
+      width: 100%; height: 100%;
+      background: rgba(0, 0, 0, 0);
+      color: white;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+    ">
+                </div>
+            </div>
+
+            <!-- Botón para editar la URL del video -->
+            <div *ngIf="modoEdicion && Permiso.TienePermiso('EmpresaPortada', 'Editar')" class="position-absolute" style="top: 10px; right: 10px;">
+                <div class="input-group">
+                    <input type="text" [(ngModel)]="rawYoutubeUrl" class="form-control form-control-sm"
+                        placeholder="URL de YouTube" style="max-width: 200px;">
+                    <button class="btn btn-sm btn-primary" (click)="actualizarVideo()">
+                        <i class="bi bi-check"></i>
+                    </button>
+                </div>
+            </div>
+        </div>
+
+    </div>
+</div>
+
+<!-- Mostrar spinner mientras se cargan los datos -->
+<div *ngIf="isLoading" class="text-center p-4">
+    <div class="spinner-border" role="status">
+        <span class="visually-hidden">Cargando...</span>
+    </div>
+</div>
+
+<!-- Mostrar mensaje de error si falla la carga -->
+<div *ngIf="error" class="alert alert-danger m-3">
+    Error al cargar los datos de la portada. Por favor, intenta nuevamente más tarde.
+</div>
+<app-spinner-global [visible]="isLoading"></app-spinner-global>

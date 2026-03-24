@@ -1,0 +1,110 @@
+<div class="contenedor-fluido pagina-login p-0 m-0">
+  <div class="row g-0 h-100">
+    <div class="col-md-6 d-none d-md-block banner-login">
+      <img [src]="portadaLogin?.UrlImagenPortada" class="img-fluid h-100 w-100"
+        alt="Promesa de Dios Panadería & Repostería">
+      <button *ngIf="Permiso.TienePermiso('LoginPortada', 'SubirImagen')" class="btn btn-sm btn-light trigo-edit-button"
+        style="top: 0; left: 0;" title="Cambiar imagen">
+        <label for="imagenPortadaUpload" style="margin-bottom: 0; cursor: pointer;">
+          <i class="bi bi-image fs-4"></i>
+        </label>
+        <input id="imagenPortadaUpload" type="file" accept="image/*" (change)="actualizarImagenPortada($event)"
+          style="display: none;">
+      </button>
+    </div>
+
+    <div class="col-md-6 contenedor-formulario-login">
+      <div class="contenedor-trigo-abajo">
+        <img [src]="portadaLogin?.UrlImagenDecorativaIzquierda" class="trigo-abajo" alt="Trigo decorativo">
+        <button *ngIf="Permiso.TienePermiso('LoginPortada', 'SubirImagen')"
+          class="btn btn-sm btn-light trigo-edit-button" style="top: 0; left: 0;" title="Cambiar imagen">
+          <label for="trigoIzquierdoUpload" style="margin-bottom: 0; cursor: pointer;">
+            <i class="bi bi-image fs-4"></i>
+          </label>
+          <input id="trigoIzquierdoUpload" type="file" accept="image/*"
+            (change)="actualizarImagenPortadaIzquierda($event)" style="display: none;">
+        </button>
+      </div>
+
+      <div class="formulario-login">
+        <div class="text-center mb-2">
+          <div [style.backgroundColor]="portadaLogin?.Color" class="contenedor-icono-usuario">
+            <i class="bi bi-person-fill"></i>
+          </div>
+          <h4 [style.color]="portadaLogin?.Color" class="titulo-login">INICIAR SESIÓN</h4>
+        </div>
+
+  
+        <button *ngIf="Permiso.TienePermiso('LoginPortada', 'Editar')" class="btn edit-main-button btn-edit btn-success"
+          (click)="guardarCambios()">
+          <i class="bi bi-check-lg" style="color: #ffffff;"></i>
+        </button>
+
+
+        <button *ngIf="portadaLogin && Permiso.TienePermiso('LoginPortada', 'Editar')"
+          class="btn btn-sm btn-light edit-button" style="top: 0; right: 0;" title="Cambiar color">
+          <input type="color" [(ngModel)]="portadaLogin.Color" style="width: 20px; height: 20px;">
+        </button>
+
+        <form (ngSubmit)="login()" #loginForm="ngForm">
+          <div class="mb-3">
+            <label for="nombreUsuario" class="etiqueta-formulario">Usuario</label>
+            <input type="text" class="control-formulario" id="nombreUsuario" [(ngModel)]="NombreUsuario"
+              name="nombreUsuario" placeholder="usr_ejemplo" autocomplete="username" required
+              #nombreUsuarioField="ngModel">
+
+            <!-- Mensaje de error para el campo usuario -->
+            <div class="text-danger small mt-1" *ngIf="nombreUsuarioField.invalid && nombreUsuarioField.touched">
+              El nombre de usuario es requerido
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <label for="clave" class="etiqueta-formulario">Contraseña</label>
+            <input type="password" class="control-formulario" id="clave" [(ngModel)]="Clave" name="clave"
+              placeholder="••••••••••••" autocomplete="current-password" required #claveField="ngModel">
+
+            <!-- Mensaje de error para el campo contraseña -->
+            <div class="text-danger small mt-1" *ngIf="claveField.invalid && claveField.touched">
+              La contraseña es requerida
+            </div>
+          </div>
+
+          <div class="mb-3">
+            <input class="entrada-check" type="checkbox" id="recordarUsuario" name="recordarUsuario">
+            <label class="etiqueta-check" for="recordarUsuario">
+              Recordar usuario
+            </label>
+          </div>
+
+          <div class="mensaje-error text-danger mb-3" *ngIf="errorMessage">
+            {{ errorMessage }}
+          </div>
+
+          <button [style.backgroundColor]="portadaLogin?.Color" type="submit" class="boton boton-oscuro w-100 py-2"
+            [disabled]="loginForm.invalid">
+            Iniciar
+          </button>
+
+          <div class="text-end mt-5">
+            <a href="#" class="olvido-contrasena">¿Olvidaste tu contraseña?</a>
+          </div>
+        </form>
+      </div>
+
+      <div class="contenedor-trigo-derecha">
+        <img [src]="portadaLogin?.UrlImagenDecorativaDerecha" class="trigo-derecha" alt="Trigo decorativo">
+        <button *ngIf="Permiso.TienePermiso('LoginPortada', 'SubirImagen')"
+          class="btn btn-sm btn-light trigo-edit-button" style="top: 0; right: 0;" title="Cambiar imagen">
+          <label for="trigoDerechoUpload" style="margin-bottom: 0; cursor: pointer;">
+            <i class="bi bi-image fs-4"></i>
+          </label>
+          <input id="trigoDerechoUpload" type="file" accept="image/*" (change)="actualizarImagenPortadaDerecha($event)"
+            style="display: none;">
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+<app-spinner-global [visible]="isLoading"></app-spinner-global>

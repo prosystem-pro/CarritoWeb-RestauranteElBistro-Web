@@ -1,0 +1,22 @@
+.icon-container {
+  position: relative;
+}
+
+.icon-container button {
+  position: absolute;
+  top: 10px; /* Ajusta el valor según tu preferencia */
+  right: 10px; /* Ajusta el valor según tu preferencia */
+  border-radius: 50%; /* Hace que el botón sea redondo */
+  padding: 5px;
+  width: 35px;
+  opacity: 90%;
+}
+
+.icon-container svg {
+  display: block;
+  width: 100%;
+}
+
+.bi-container i {
+  color: white;
+}

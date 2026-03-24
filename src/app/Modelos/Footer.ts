@@ -1,0 +1,29 @@
+export interface Footer {
+  CodigoFooter?: number;
+  CodigoEmpresa?: number;
+  TextoInicio?: string;
+  ColorTextoInicio?: string;
+  TextoMenu?: string;
+  ColorTextoMenu?: string;
+  TextoContacto?: string;
+  ColorTextoContacto?: string;
+  TextoOtro?: string;
+  ColorTextoOtro?: string;
+  TextoTelefonoOficina?: string;
+  ColorTextoTelefonoOficina?: string;
+  ColorNoCelular?: string;
+  TextoSuscripcion?: string;
+  ColorTextoSuscripcion?: string;
+  TextoRedesSociales?: string;
+  ColorTextoRedesSociales?: string;
+  TextoCorreo?: string;
+  ColorTextoCorreo?: string;
+  TextoBotonSuscribirte?: string;
+  ColorTextoBotonSuscribirte?: string;
+  ColorBotonSuscribirte?: string;
+  DerechoDeAutor?: string;
+  ColorDerechosDeAutor?: string;
+  ColorFooter?: string;
+  UrlLogo?: string;
+  Estatus?: any;
+}
