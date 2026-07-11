@@ -21,7 +21,7 @@
 
     <div class="container">
         <!-- Versión desktop -->
-        <div class="row d-none d-md-flex">
+        <div class="row d-none d-md-flex justify-content-center">
             <!-- Columna izquierda: Logo y navegación -->
             <div class="col-md-3">
                 <div class="mb-4 position-relative">
@@ -153,8 +153,8 @@
                 </div>
             </div>
 
-            <!-- Columna derecha: Formulario de suscripción -->
-            <div class="col-md-5 mt-5">
+            <!-- Columna derecha: Formulario de suscripción (oculto) -->
+            <div class="col-md-5 mt-5" *ngIf="false">
                 <div class="position-relative">
                     <h5 class="mb-3" [style.color]="footerData.ColorTextoSuscripcion">
                         <span *ngIf="!modoEdicion">{{ footerData.TextoSuscripcion }}</span>
