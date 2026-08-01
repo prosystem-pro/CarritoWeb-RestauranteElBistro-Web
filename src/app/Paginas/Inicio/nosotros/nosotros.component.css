@@ -63,6 +63,11 @@
 .vision-card p {
   margin-bottom: 0;
   width: 100%;
+  text-align: justify;
+  /* Estira el espacio entre palabras para llenar cada linea (estilo Word),
+     sin cortar palabras con guiones */
+  text-justify: inter-word;
+  hyphens: none;
 }
 
 .mission-logo img,
