@@ -16,7 +16,7 @@ import { LoginGuard } from './Servicios/loginGuard';
 import { SpinnerGlobalComponent } from './Componentes/spinner-global/spinner-global.component';
 
 export const routes: Routes = [
-  { path: '', redirectTo: '/nosotros', pathMatch: 'full' },
+  { path: '', redirectTo: '/clasificacion', pathMatch: 'full' },
   { path: 'login', component: LoginComponent, canActivate: [LoginGuard] },
 
   //Rutas publicas
@@ -36,5 +36,5 @@ export const routes: Routes = [
   { path: 'reporte-tiempo-pagina', component: ReporteTiempoPaginaComponent, canActivate: [AutorizacionRuta] },
   { path: 'pago', component: PagoComponent, canActivate: [AutorizacionRuta] },
 
-  { path: '**', redirectTo: 'nosotros' },
+  { path: '**', redirectTo: 'clasificacion' },
 ];
