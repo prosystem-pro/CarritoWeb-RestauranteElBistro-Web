@@ -30,6 +30,10 @@ export class CarritoComponent implements OnInit {
   isLoading: boolean = false;
   productosCarrito: ProductoConCantidad[] = [];
   total: number = 0;
+  // Modal para elegir si el pedido es en restaurante o a domicilio
+  mostrarModalTipoPedido: boolean = false;
+  // Porcentaje de servicio que se agrega cuando el pedido es en restaurante
+  porcentajeServicio: number = 0.10;
 
   constructor(private carritoService: ServicioCompartido, private empresaServicio: EmpresaServicio, private RedSocialServicio: RedSocialServicio,
     private ReporteProductoServicio: ReporteProductoServicio, private AlertaServicio: AlertaServicio
@@ -197,7 +201,23 @@ export class CarritoComponent implements OnInit {
   //   });
   // }
 
-  realizarPedido(): void {
+  // Abre el modal que pregunta el tipo de pedido antes de enviar por WhatsApp
+  iniciarPedido(): void {
+    if (this.productosCarrito.length === 0) return;
+    this.mostrarModalTipoPedido = true;
+  }
+
+  cerrarModalTipoPedido(): void {
+    this.mostrarModalTipoPedido = false;
+  }
+
+  // tipo: 'restaurante' agrega el rubro Servicio (10%); 'domicilio' envía el total normal
+  seleccionarTipoPedido(tipo: 'restaurante' | 'domicilio'): void {
+    this.mostrarModalTipoPedido = false;
+    this.realizarPedido(tipo);
+  }
+
+  realizarPedido(tipoPedido: 'restaurante' | 'domicilio' = 'domicilio'): void {
     this.ReportarProductosVendidos();
 
     const esIOS = this.isIOS() && this.isSafari();
@@ -239,8 +259,26 @@ export class CarritoComponent implements OnInit {
           return;
         }
 
-        const mensaje = `Hola, me gustaría ordenar:\n${this.productosCarrito.map(producto =>
-          `- ${producto.cantidad}x ${producto.NombreProducto} (${producto.Moneda} ${producto.Precio} c/u)`).join('\n')}\n\nTotal: ${this.productosCarrito[0].Moneda} ${this.total}`;
+        const moneda = this.productosCarrito[0].Moneda;
+        const lineasProductos = this.productosCarrito.map(producto =>
+          `- ${producto.cantidad}x ${producto.NombreProducto} (${producto.Moneda} ${producto.Precio} c/u)`).join('\n');
+
+        let resumen: string;
+        if (tipoPedido === 'restaurante') {
+          const servicio = Math.round(this.total * this.porcentajeServicio * 100) / 100;
+          const totalFinal = Math.round((this.total + servicio) * 100) / 100;
+          resumen =
+            `\n\nTipo de pedido: En restaurante` +
+            `\nSubtotal: ${moneda} ${this.total}` +
+            `\nServicio (${this.porcentajeServicio * 100}%): ${moneda} ${servicio.toFixed(2)}` +
+            `\nTotal: ${moneda} ${totalFinal.toFixed(2)}`;
+        } else {
+          resumen =
+            `\n\nTipo de pedido: A domicilio` +
+            `\nTotal: ${moneda} ${this.total}`;
+        }
+
+        const mensaje = `Hola, me gustaría ordenar:\n${lineasProductos}${resumen}`;
 
         const mensajeCodificado = encodeURIComponent(mensaje);
         const url = `${urlBase}?text=${mensajeCodificado}`;

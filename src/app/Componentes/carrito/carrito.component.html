@@ -49,10 +49,33 @@
                     {{ productosCarrito.length > 0 ? productosCarrito[0].Moneda : 'Q' }} {{ total }}
                 </span>
             </div>
-            <button class="boton-pedido" [disabled]="productosCarrito.length === 0" (click)="realizarPedido()">
+            <button class="boton-pedido" [disabled]="productosCarrito.length === 0" (click)="iniciarPedido()">
                 Pedir por WhatsApp
                 <i class="bi bi-whatsapp"></i>
             </button>
+        </div>
+    </div>
+
+    <!-- Modal: elegir tipo de pedido antes de enviar por WhatsApp -->
+    <div class="fondo-modal-tipo" *ngIf="mostrarModalTipoPedido" (click)="cerrarModalTipoPedido()">
+        <div class="modal-tipo" (click)="$event.stopPropagation()">
+            <button class="modal-cerrar" (click)="cerrarModalTipoPedido()" aria-label="Cerrar">
+                <i class="bi bi-x-lg"></i>
+            </button>
+            <h3 class="modal-titulo">¿Cómo será tu pedido?</h3>
+            <p class="modal-nota">Si es en el restaurante se agrega un {{ porcentajeServicio * 100 }}% de servicio.</p>
+            <div class="modal-opciones">
+                <button class="modal-opcion" [style.backgroundColor]="colorNavbarEIcono"
+                    (click)="seleccionarTipoPedido('restaurante')">
+                    <i class="bi bi-shop"></i>
+                    En el restaurante
+                </button>
+                <button class="modal-opcion" [style.backgroundColor]="colorNavbarEIcono"
+                    (click)="seleccionarTipoPedido('domicilio')">
+                    <i class="bi bi-scooter"></i>
+                    A domicilio
+                </button>
+            </div>
         </div>
     </div>
 </div>
