@@ -22,6 +22,9 @@
                 <div class="detalles-producto">
                     <h3>{{ producto.NombreProducto }}</h3>
                     <p class="precio">{{ producto.Moneda }} {{ producto.Precio }}</p>
+                    <p class="comentario-texto" *ngIf="producto.comentario?.trim()">
+                        ({{ producto.comentario }})
+                    </p>
                 </div>
                 <div class="controles-cantidad">
                     <div class="cantidad-producto">
@@ -35,10 +38,20 @@
                             +
                         </button>
                     </div>
+                    <button class="boton-comentario" (click)="toggleComentario(i)"
+                        [class.activo]="comentarioAbierto === i" aria-label="Agregar comentario">
+                        <i class="bi bi-chat-left-text" [style.color]="colorNavbarEIcono"></i>
+                    </button>
                 </div>
                 <button class="boton-eliminar" (click)="eliminarProducto(i)" aria-label="Eliminar producto">
                     <i class="bi bi-trash" [style.color]="colorNavbarEIcono"></i>
                 </button>
+
+                <div class="comentario-input" *ngIf="comentarioAbierto === i">
+                    <textarea rows="2" maxlength="150" placeholder="Comentario para este producto (ej. sin cebolla)"
+                        [value]="producto.comentario || ''"
+                        (input)="actualizarComentario(i, $any($event.target).value)"></textarea>
+                </div>
             </div>
         </div>
 

@@ -13,6 +13,9 @@ interface ProductoConCantidad {
   Moneda: string;
   UrlImagen: string;
   cantidad: number;
+  // Comentario temporal del cliente para este producto. Vive solo en el carrito
+  // (localStorage) y se limpia al enviar el pedido o vaciar el carrito.
+  comentario?: string;
 }
 
 @Component({
@@ -30,6 +33,8 @@ export class CarritoComponent implements OnInit {
   isLoading: boolean = false;
   productosCarrito: ProductoConCantidad[] = [];
   total: number = 0;
+  // Índice del producto cuyo campo de comentario está abierto (null = ninguno)
+  comentarioAbierto: number | null = null;
   // Modal para elegir si el pedido es en restaurante o a domicilio
   mostrarModalTipoPedido: boolean = false;
   // Porcentaje de servicio que se agrega cuando el pedido es en restaurante
@@ -87,6 +92,19 @@ export class CarritoComponent implements OnInit {
   actualizarCarrito(): void {
     localStorage.setItem('carrito', JSON.stringify(this.productosCarrito));
     this.calcularTotal();
+  }
+
+  // Abre/cierra el campo de comentario de un producto
+  toggleComentario(indice: number): void {
+    this.comentarioAbierto = this.comentarioAbierto === indice ? null : indice;
+  }
+
+  // Guarda el comentario temporal del producto (persiste en el carrito)
+  actualizarComentario(indice: number, valor: string): void {
+    if (this.productosCarrito[indice]) {
+      this.productosCarrito[indice].comentario = valor;
+      this.actualizarCarrito();
+    }
   }
 
   cerrar(): void {
@@ -260,8 +278,11 @@ export class CarritoComponent implements OnInit {
         }
 
         const moneda = this.productosCarrito[0].Moneda;
-        const lineasProductos = this.productosCarrito.map(producto =>
-          `- ${producto.cantidad}x ${producto.NombreProducto} (${producto.Moneda} ${producto.Precio} c/u)`).join('\n');
+        const lineasProductos = this.productosCarrito.map(producto => {
+          const linea = `- ${producto.cantidad}x ${producto.NombreProducto} (${producto.Moneda} ${producto.Precio} c/u)`;
+          const comentario = (producto.comentario || '').trim();
+          return comentario ? `${linea} (${comentario})` : linea;
+        }).join('\n');
 
         let resumen: string;
         if (tipoPedido === 'restaurante') {
