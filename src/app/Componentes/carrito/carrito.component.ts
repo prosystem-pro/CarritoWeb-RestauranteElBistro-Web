@@ -281,11 +281,11 @@ export class CarritoComponent implements OnInit {
 
         const moneda = this.productosCarrito[0].Moneda;
         const lineasProductos = this.productosCarrito.map(producto => {
-          const linea = `- ${producto.cantidad}x ${producto.NombreProducto} (${producto.Moneda} ${producto.Precio} c/u)`;
+          // Viñeta "•" (no "-"): WhatsApp interpreta "- " como lista con viñetas y
+          // aplica negrita al primer ítem, comiéndose el salto tras "ordenar:".
+          const linea = `• ${producto.cantidad}x ${producto.NombreProducto} (${producto.Moneda} ${producto.Precio} c/u)`;
           const comentario = (producto.comentario || '').trim();
-          // El comentario va en su propia línea (no pegado al paréntesis del precio):
-          // dos paréntesis juntos en la misma línea confunden el formateo de WhatsApp.
-          return comentario ? `${linea}\n  (${comentario})` : linea;
+          return comentario ? `${linea} (${comentario})` : linea;
         }).join('\n');
 
         let resumen: string;
