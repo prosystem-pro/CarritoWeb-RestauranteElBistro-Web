@@ -189,6 +189,14 @@
   border-color: #bbb;
 }
 
+.comentario-contador {
+  display: block;
+  text-align: right;
+  font-size: 0.75rem;
+  color: #999;
+  margin-top: 0.2rem;
+}
+
 .cantidad-producto {
   display: flex;
   align-items: center;

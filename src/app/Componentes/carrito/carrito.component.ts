@@ -35,6 +35,8 @@ export class CarritoComponent implements OnInit {
   total: number = 0;
   // Índice del producto cuyo campo de comentario está abierto (null = ninguno)
   comentarioAbierto: number | null = null;
+  // Límite de caracteres del comentario por producto
+  limiteComentario: number = 80;
   // Modal para elegir si el pedido es en restaurante o a domicilio
   mostrarModalTipoPedido: boolean = false;
   // Porcentaje de servicio que se agrega cuando el pedido es en restaurante
@@ -102,7 +104,7 @@ export class CarritoComponent implements OnInit {
   // Guarda el comentario temporal del producto (persiste en el carrito)
   actualizarComentario(indice: number, valor: string): void {
     if (this.productosCarrito[indice]) {
-      this.productosCarrito[indice].comentario = valor;
+      this.productosCarrito[indice].comentario = (valor || '').slice(0, this.limiteComentario);
       this.actualizarCarrito();
     }
   }

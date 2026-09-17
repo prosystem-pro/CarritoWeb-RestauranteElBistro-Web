@@ -50,9 +50,13 @@
                 </div>
 
                 <div class="comentario-input" *ngIf="comentarioAbierto === i">
-                    <textarea rows="2" maxlength="150" placeholder="Comentario para este producto (ej. sin cebolla)"
+                    <textarea rows="2" [attr.maxlength]="limiteComentario"
+                        placeholder="Comentario para este producto (ej. sin cebolla)"
                         [value]="producto.comentario || ''"
                         (input)="actualizarComentario(i, $any($event.target).value)"></textarea>
+                    <small class="comentario-contador">
+                        {{ (producto.comentario || '').length }}/{{ limiteComentario }}
+                    </small>
                 </div>
             </div>
         </div>
