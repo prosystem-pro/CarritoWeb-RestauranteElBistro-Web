@@ -283,7 +283,9 @@ export class CarritoComponent implements OnInit {
         const lineasProductos = this.productosCarrito.map(producto => {
           const linea = `- ${producto.cantidad}x ${producto.NombreProducto} (${producto.Moneda} ${producto.Precio} c/u)`;
           const comentario = (producto.comentario || '').trim();
-          return comentario ? `${linea} (${comentario})` : linea;
+          // El comentario va en su propia línea (no pegado al paréntesis del precio):
+          // dos paréntesis juntos en la misma línea confunden el formateo de WhatsApp.
+          return comentario ? `${linea}\n  (${comentario})` : linea;
         }).join('\n');
 
         let resumen: string;
