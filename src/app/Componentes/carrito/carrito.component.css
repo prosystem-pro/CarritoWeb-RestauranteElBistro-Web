@@ -222,10 +222,19 @@
   cursor: pointer;
   /* color: #ffa500; */
   font-size: 1.2rem;
-  padding: 0.3rem;
-  position: absolute;
-  top: 10px;
-  right: 10px;
+  padding: 0.2rem 0.45rem;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  border-radius: 6px;
+}
+
+/* Fila de iconos (comentario + eliminar) debajo de la cantidad */
+.acciones-producto {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 0.3rem;
 }
 
 .pie-carrito {

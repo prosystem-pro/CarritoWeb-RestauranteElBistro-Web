@@ -38,14 +38,16 @@
                             +
                         </button>
                     </div>
-                    <button class="boton-comentario" (click)="toggleComentario(i)"
-                        [class.activo]="comentarioAbierto === i" aria-label="Agregar comentario">
-                        <i class="bi bi-chat-left-text" [style.color]="colorNavbarEIcono"></i>
-                    </button>
+                    <div class="acciones-producto">
+                        <button class="boton-comentario" (click)="toggleComentario(i)"
+                            [class.activo]="comentarioAbierto === i" aria-label="Agregar comentario">
+                            <i class="bi bi-chat-left-text" [style.color]="colorNavbarEIcono"></i>
+                        </button>
+                        <button class="boton-eliminar" (click)="eliminarProducto(i)" aria-label="Eliminar producto">
+                            <i class="bi bi-trash" [style.color]="colorNavbarEIcono"></i>
+                        </button>
+                    </div>
                 </div>
-                <button class="boton-eliminar" (click)="eliminarProducto(i)" aria-label="Eliminar producto">
-                    <i class="bi bi-trash" [style.color]="colorNavbarEIcono"></i>
-                </button>
 
                 <div class="comentario-input" *ngIf="comentarioAbierto === i">
                     <textarea rows="2" maxlength="150" placeholder="Comentario para este producto (ej. sin cebolla)"
